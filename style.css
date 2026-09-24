@@ -1,0 +1,22 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+.btn {
+    padding: 10px;
+    font-size: 30px;
+}
+
+#panel-display {
+    font-size: 40px;
+}
+
+#panel-numbers {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#panel-numbers .btn {
+    min-width: calc(100%/3)
+}
