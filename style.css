@@ -12,11 +12,11 @@
     font-size: 40px;
 }
 
-#panel-numbers {
+#panel-buttons {
     display: flex;
     flex-wrap: wrap;
 }
 
-#panel-numbers .btn {
+#panel-buttons .btn {
     min-width: calc(100%/3)
 }
