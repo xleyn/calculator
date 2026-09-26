@@ -37,6 +37,11 @@ panelButtons.addEventListener("click", (event) => {
   updateQueue(repr);
   updateDisplay();
 });
+window.addEventListener("keydown", (event) => {
+  const key = event.key;
+  updateQueue(KEYS_TO_REPR[key]);
+  updateDisplay();
+});
 
 function updateQueue(input) {
   if (input === "calc") {
