@@ -33,8 +33,9 @@ function computeResult() {
     if (priorityOperator) {
       let operatorIdx = queue.indexOf(priorityOperator);
       while (operatorIdx !== -1) {
-        const [num1, _, num2] = queue.slice(operatorIdx - 1, 3);
-        queue.splice(operatorIdx - 1, 3, operate(num1, num2, priorityOperator));
+        const [startIdx, endIdx] = [operatorIdx - 1, operatorIdx + 2];
+        const [num1, _, num2] = queue.slice(startIdx, endIdx);
+        queue.splice(startIdx, 3, operate(num1, num2, priorityOperator));
         operatorIdx = queue.indexOf(priorityOperator);
       }
     }
@@ -49,10 +50,13 @@ function updateQueue(val) {
   if (val === "=") {
     computeResult();
   } else if (isOperator(val)) {
-    queue.push(val);
+    if (isOperator(queue.at(-1))) {
+      queue.splice(-1, 1, val);
+    } else {
+      queue.push(val);
+    }
   } else if (val === "ac") {
     queue.length = 0;
-    // handle clear
   } else if (isStringNumeric(val)) {
     valNumber = Number(val);
     if (Number.isFinite(queue.at(-1))) {
