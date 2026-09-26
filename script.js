@@ -30,6 +30,7 @@ const SORTED_OPERATORS = Object.entries(OPERATOR_PRECEDENCE)
   .sort(([, a], [, b]) => b - a)
   .map((arr) => arr[0]);
 const queue = [];
+let lastInput;
 
 // select elements from DOM
 const panelButtons = document.querySelector("#panel-buttons");
@@ -58,7 +59,7 @@ function handleInput(input) {
   } else {
     modifyQueue(input);
   }
-
+  lastInput = input;
   updateDisplay();
 }
 
@@ -106,7 +107,12 @@ function modifyQueue(input) {
 function modifyQueueNumber(str) {
   const num = Number(str);
   if (Number.isFinite(queue.at(-1))) {
-    queue.splice(-1, 1, Number(String(queue.at(-1)) + str));
+    if (lastInput === "calc") {
+      clearQueue();
+      queue.push(num);
+    } else {
+      queue.splice(-1, 1, Number(String(queue.at(-1)) + str));
+    }
   } else {
     queue.push(num);
   }
@@ -122,15 +128,19 @@ function modifyQueueOperator(op) {
 }
 
 function updateDisplay() {
+  function fmt(num) {
+    return (Math.round(num * 100) / 100)
+      .toString()
+      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  }
   const formattedQueue = queue.map((elem) => {
     if (Number.isFinite(elem)) {
-      // format to 2dp and add commas for large numbers
-      elem = Math.round(elem * 100) / 100;
-      return elem.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+      return fmt(elem);
     } else {
       // replace * and / with common symbols for display
       return elem.replace("*", "x").replace("/", "÷");
     }
   });
   panelDisplay.textContent = formattedQueue.join(" ");
+  console.log(queue, lastInput);
 }
