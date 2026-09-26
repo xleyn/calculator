@@ -10,6 +10,8 @@ const panelDisplay = document.querySelector("#panel-display");
 // utility arrow functions
 const isStringNumeric = (a) => Number.isFinite(Number(a));
 const isOperator = (operator) => VALID_OPERATORS.includes(operator);
+const numberWithCommas = (x) =>
+  x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 
 function operate(num1, num2, operator) {
   switch (operator) {
@@ -43,27 +45,37 @@ function computeResult() {
 }
 
 function updateDisplay() {
-  panelDisplay.textContent = queue.join(" ");
+  const stringQueue = queue.map(numberWithCommas);
+  panelDisplay.textContent = stringQueue.join(" ");
+}
+
+function handleNumeric(val) {
+  valNumber = Number(val);
+  if (Number.isFinite(queue.at(-1))) {
+    queue.splice(-1, 1, Number(String(queue.at(-1)) + val));
+  } else {
+    queue.push(valNumber);
+  }
+}
+
+function handleOperator(val) {
+  if (queue.length === 0) return;
+  if (isOperator(queue.at(-1))) {
+    queue.splice(-1, 1, val);
+  } else {
+    queue.push(val);
+  }
 }
 
 function updateQueue(val) {
   if (val === "=") {
     computeResult();
   } else if (isOperator(val)) {
-    if (isOperator(queue.at(-1))) {
-      queue.splice(-1, 1, val);
-    } else {
-      queue.push(val);
-    }
+    handleOperator(val);
   } else if (val === "ac") {
     queue.length = 0;
   } else if (isStringNumeric(val)) {
-    valNumber = Number(val);
-    if (Number.isFinite(queue.at(-1))) {
-      queue.splice(-1, 1, Number(String(queue.at(-1)) + val));
-    } else {
-      queue.push(valNumber);
-    }
+    handleNumeric(val);
   }
 }
 
