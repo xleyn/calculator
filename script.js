@@ -199,4 +199,5 @@ function updateDisplay() {
 
   // show either queue or error message if present
   panelDisplay.textContent = errorMsg ? errorMsg : formattedQueue.join(" ");
+  console.log(queue);
 }

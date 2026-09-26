@@ -1,5 +1,6 @@
 :root {
     --button-gap: 10px;
+    background-color: rgb(226, 206, 223);
 }
 
 * {
@@ -15,23 +16,29 @@ body {
 
 .btn {
     font-size: 40px;
+    border-radius: 15px;
+    border: 2px solid black;
+    background-color: rgb(156, 232, 238);
 }
 
 #calculator {
     flex: 0 1 450px;
     margin: 100px;
     padding: 20px;
-    background-color: #1C4D93;
+    background-color: #2aa27c;
     display: flex;
     flex-direction: column;
-    gap: var(--button-gap)
-
+    gap: var(--button-gap);
+    border-radius: 20px;
+    border: 5px solid black;
 }
 
 #panel-display {
     font-size: 40px;
     text-align: center;
     background-color: white;
+    border: 2px solid black;
+    border-radius: 20px;
 }
 
 #panel-buttons {
