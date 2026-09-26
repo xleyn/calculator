@@ -50,37 +50,37 @@ function updateDisplay() {
 }
 
 function handleNumeric(val) {
-  valNumber = Number(val);
+  num = Number(val);
   if (Number.isFinite(queue.at(-1))) {
     queue.splice(-1, 1, Number(String(queue.at(-1)) + val));
   } else {
-    queue.push(valNumber);
+    queue.push(num);
   }
 }
 
-function handleOperator(val) {
+function handleOperator(op) {
   if (queue.length === 0) return;
   if (isOperator(queue.at(-1))) {
-    queue.splice(-1, 1, val);
+    queue.splice(-1, 1, op);
   } else {
-    queue.push(val);
+    queue.push(op);
   }
 }
 
-function updateQueue(val) {
-  if (val === "=") {
+function updateQueue(input) {
+  if (input === "=") {
     computeResult();
-  } else if (isOperator(val)) {
-    handleOperator(val);
-  } else if (val === "ac") {
+  } else if (isOperator(input)) {
+    handleOperator(input);
+  } else if (input === "ac") {
     queue.length = 0;
-  } else if (isStringNumeric(val)) {
-    handleNumeric(val);
+  } else if (isStringNumeric(input)) {
+    handleNumeric(input);
   }
 }
 
 panelButtons.addEventListener("click", (event) => {
-  const val = event.target.dataset.val;
-  updateQueue(val);
+  const input = event.target.dataset.input;
+  updateQueue(input);
   updateDisplay();
 });
