@@ -19,18 +19,18 @@ body {
     border-radius: 15px;
     border: 2px solid black;
     background-color: rgb(156, 232, 238);
+    min-width: calc((100% - 3*var(--button-gap))/ 4);
 }
 
 #calculator {
     flex: 0 1 450px;
-    margin: 100px;
     padding: 20px;
     background-color: #2aa27c;
     display: flex;
     flex-direction: column;
-    gap: var(--button-gap);
     border-radius: 20px;
     border: 5px solid black;
+    height: 500px;
 }
 
 #panel-display {
@@ -39,44 +39,11 @@ body {
     background-color: white;
     border: 2px solid black;
     border-radius: 20px;
+    margin-bottom: var(--button-gap)
 }
 
 #panel-buttons {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: var(--button-gap)
 }
-
-#panel-top {
-    display: flex;
-    gap: var(--button-gap);
-}
-
-#panel-top .btn {
-    flex: 1;
-}
-
-#panel-middle {
-    display: flex;
-    gap: var(--button-gap)
-}
-
-#panel-middle-left {
-    flex: 3;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap-reverse;
-    gap: var(--button-gap)
-}
-
-#panel-middle-left .btn {
-    min-width: calc((100% - var(--button-gap) * 2) / 3)
-}
-
-#panel-middle-right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--button-gap);
-}
-
