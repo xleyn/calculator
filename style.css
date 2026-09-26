@@ -30,7 +30,6 @@ body {
     flex-direction: column;
     border-radius: 20px;
     border: 5px solid black;
-    height: 500px;
 }
 
 #panel-display {
