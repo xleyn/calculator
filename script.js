@@ -1,10 +1,13 @@
+// global constants
 const VALID_OPERATORS = ["+", "-", "x", "÷"];
 const REVERSE_PRIORITY_ORDER = ["-", "+", "x", "÷"];
 const queue = [];
 
+// select elements from DOM
 const panelButtons = document.querySelector("#panel-buttons");
 const panelDisplay = document.querySelector("#panel-display");
 
+// utility arrow functions
 const isStringNumeric = (a) => Number.isFinite(Number(a));
 const isOperator = (operator) => VALID_OPERATORS.includes(operator);
 
@@ -14,9 +17,9 @@ function operate(num1, num2, operator) {
       return num1 + num2;
     case "-":
       return num1 - num2;
-    case "*":
+    case "x":
       return num1 * num2;
-    case "/":
+    case "÷":
       return num1 / num2;
   }
 }
@@ -47,12 +50,11 @@ function updateQueue(val) {
     computeResult();
   } else if (isOperator(val)) {
     queue.push(val);
-  } else if (val === "clear") {
+  } else if (val === "ac") {
+    queue.length = 0;
     // handle clear
   } else if (isStringNumeric(val)) {
     valNumber = Number(val);
-
-    // If a
     if (Number.isFinite(queue.at(-1))) {
       queue.splice(-1, 1, Number(String(queue.at(-1)) + val));
     } else {

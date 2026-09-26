@@ -10,6 +10,7 @@
 
 #panel-display {
     font-size: 40px;
+    min-height:75px;
 }
 
 #panel-buttons {
