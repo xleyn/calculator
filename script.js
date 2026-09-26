@@ -42,39 +42,30 @@ const isValidOperator = (operator) => SORTED_OPERATORS.includes(operator);
 // main
 panelButtons.addEventListener("click", (event) => {
   const repr = event.target.dataset.repr;
-  updateQueue(repr);
-  updateDisplay();
+  handleInput(repr);
 });
 window.addEventListener("keydown", (event) => {
-  const key = event.key;
-  updateQueue(KEYS_TO_REPR[key]);
-  updateDisplay();
+  const repr = KEYS_TO_REPR[event.key];
+  if (repr === undefined) return;
+  handleInput(repr);
 });
 
-function updateQueue(input) {
+function handleInput(input) {
   if (input === "calc") {
     computeResult();
-  } else if (isValidOperator(input)) {
-    handleOperator(input);
   } else if (input === "clear") {
-    queue.length = 0;
-  } else if (isStringNumeric(input)) {
-    handleNumeric(input);
+    clearQueue();
+  } else {
+    modifyQueue(input);
   }
+
+  updateDisplay();
 }
 
-function updateDisplay() {
-  const formattedQueue = queue.map((elem) => {
-    if (Number.isFinite(elem)) {
-      // format to 2dp and add commas for large numbers
-      elem = Math.round(elem * 100) / 100;
-      return elem.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    } else {
-      // replace * and / with common symbols for display
-      return elem.replace("*", "x").replace("/", "÷");
-    }
-  });
-  panelDisplay.textContent = formattedQueue.join(" ");
+function computeResult() {
+  for (const op of SORTED_OPERATORS) {
+    reduceQueue(op);
+  }
 }
 
 function reduceQueue(op) {
@@ -84,12 +75,6 @@ function reduceQueue(op) {
     const num2 = queue[opIdx + 1];
     queue.splice(opIdx - 1, 3, operate(num1, num2, op));
     opIdx = queue.indexOf(op);
-  }
-}
-
-function computeResult() {
-  for (const op of SORTED_OPERATORS) {
-    reduceQueue(op);
   }
 }
 
@@ -106,20 +91,46 @@ function operate(num1, num2, operator) {
   }
 }
 
-function handleNumeric(val) {
-  num = Number(val);
+function clearQueue() {
+  queue.length = 0;
+}
+
+function modifyQueue(input) {
+  if (isValidOperator(input)) {
+    modifyQueueOperator(input);
+  } else if (isStringNumeric(input)) {
+    modifyQueueNumber(input);
+  }
+}
+
+function modifyQueueNumber(str) {
+  const num = Number(str);
   if (Number.isFinite(queue.at(-1))) {
-    queue.splice(-1, 1, Number(String(queue.at(-1)) + val));
+    queue.splice(-1, 1, Number(String(queue.at(-1)) + str));
   } else {
     queue.push(num);
   }
 }
 
-function handleOperator(op) {
+function modifyQueueOperator(op) {
   if (queue.length === 0) return;
   if (isValidOperator(queue.at(-1))) {
     queue.splice(-1, 1, op);
   } else {
     queue.push(op);
   }
+}
+
+function updateDisplay() {
+  const formattedQueue = queue.map((elem) => {
+    if (Number.isFinite(elem)) {
+      // format to 2dp and add commas for large numbers
+      elem = Math.round(elem * 100) / 100;
+      return elem.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+      // replace * and / with common symbols for display
+      return elem.replace("*", "x").replace("/", "÷");
+    }
+  });
+  panelDisplay.textContent = formattedQueue.join(" ");
 }
