@@ -20,7 +20,15 @@ const KEYS_TO_REPR = {
   c: "clear",
 };
 
-const REVERSE_BODMAS = ["-", "+", "*", "/"];
+const OPERATOR_PRECEDENCE = {
+  "+": 1,
+  "-": 1,
+  "*": 2,
+  "/": 2,
+};
+const SORTED_OPERATORS = Object.entries(OPERATOR_PRECEDENCE)
+  .sort(([, a], [, b]) => b - a)
+  .map((arr) => arr[0]);
 const queue = [];
 
 // select elements from DOM
@@ -29,7 +37,7 @@ const panelDisplay = document.querySelector("#panel-display");
 
 // utility arrow functions
 const isStringNumeric = (a) => Number.isFinite(Number(a));
-const isOperator = (operator) => REVERSE_BODMAS.includes(operator);
+const isValidOperator = (operator) => SORTED_OPERATORS.includes(operator);
 
 // main
 panelButtons.addEventListener("click", (event) => {
@@ -46,7 +54,7 @@ window.addEventListener("keydown", (event) => {
 function updateQueue(input) {
   if (input === "calc") {
     computeResult();
-  } else if (isOperator(input)) {
+  } else if (isValidOperator(input)) {
     handleOperator(input);
   } else if (input === "clear") {
     queue.length = 0;
@@ -69,22 +77,20 @@ function updateDisplay() {
   panelDisplay.textContent = formattedQueue.join(" ");
 }
 
+function reduceQueue(op) {
+  let opIdx = queue.indexOf(op);
+  while (opIdx !== -1) {
+    const num1 = queue[opIdx - 1];
+    const num2 = queue[opIdx + 1];
+    queue.splice(opIdx - 1, 3, operate(num1, num2, op));
+    opIdx = queue.indexOf(op);
+  }
+}
+
 function computeResult() {
-  let priorityOperator;
-  do {
-    priorityOperator = REVERSE_BODMAS.reduce((priority, operator) => {
-      return queue.includes(operator) ? operator : priority;
-    }, null);
-    if (priorityOperator) {
-      let operatorIdx = queue.indexOf(priorityOperator);
-      while (operatorIdx !== -1) {
-        const [startIdx, endIdx] = [operatorIdx - 1, operatorIdx + 2];
-        const [num1, _, num2] = queue.slice(startIdx, endIdx);
-        queue.splice(startIdx, 3, operate(num1, num2, priorityOperator));
-        operatorIdx = queue.indexOf(priorityOperator);
-      }
-    }
-  } while (priorityOperator);
+  for (const op of SORTED_OPERATORS) {
+    reduceQueue(op);
+  }
 }
 
 function operate(num1, num2, operator) {
@@ -111,7 +117,7 @@ function handleNumeric(val) {
 
 function handleOperator(op) {
   if (queue.length === 0) return;
-  if (isOperator(queue.at(-1))) {
+  if (isValidOperator(queue.at(-1))) {
     queue.splice(-1, 1, op);
   } else {
     queue.push(op);
