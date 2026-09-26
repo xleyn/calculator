@@ -29,7 +29,7 @@ const OPERATOR_PRECEDENCE = {
 const SORTED_OPERATORS = Object.entries(OPERATOR_PRECEDENCE)
   .sort(([, a], [, b]) => b - a)
   .map((arr) => arr[0]);
-const queue = [];
+const queue = [0];
 let lastInput;
 
 // select elements from DOM
@@ -40,7 +40,7 @@ const panelDisplay = document.querySelector("#panel-display");
 const isStringNumeric = (a) => Number.isFinite(Number(a));
 const isValidOperator = (operator) => SORTED_OPERATORS.includes(operator);
 
-// main
+// main setup
 panelButtons.addEventListener("click", (event) => {
   const repr = event.target.dataset.repr;
   handleInput(repr);
@@ -50,6 +50,9 @@ window.addEventListener("keydown", (event) => {
   if (repr === undefined) return;
   handleInput(repr);
 });
+updateDisplay();
+
+// helper functions
 
 function handleInput(input) {
   if (input === "calc") {
@@ -64,6 +67,9 @@ function handleInput(input) {
 }
 
 function computeResult() {
+  // do not compute if operator is last in queue
+  if (isValidOperator(queue.at(-1))) return;
+
   for (const op of SORTED_OPERATORS) {
     reduceQueue(op);
   }

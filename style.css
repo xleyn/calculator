@@ -11,6 +11,7 @@
 #panel-display {
     font-size: 40px;
     min-height:75px;
+    text-align: center;
 }
 
 #panel-buttons {
