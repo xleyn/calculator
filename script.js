@@ -1,6 +1,26 @@
 // global constants
-const VALID_OPERATORS = ["+", "-", "x", "÷"];
-const REVERSE_PRIORITY_ORDER = ["-", "+", "x", "÷"];
+const KEYS_TO_REPR = {
+  0: "0",
+  1: "1",
+  2: "2",
+  3: "3",
+  4: "4",
+  5: "5",
+  6: "6",
+  7: "7",
+  8: "8",
+  9: "9",
+  "+": "+",
+  "-": "-",
+  "*": "*",
+  "/": "/",
+  Enter: "calc",
+  "=": "calc",
+  Escape: "clear",
+  c: "clear",
+};
+
+const REVERSE_BODMAS = ["-", "+", "*", "/"];
 const queue = [];
 
 // select elements from DOM
@@ -9,27 +29,45 @@ const panelDisplay = document.querySelector("#panel-display");
 
 // utility arrow functions
 const isStringNumeric = (a) => Number.isFinite(Number(a));
-const isOperator = (operator) => VALID_OPERATORS.includes(operator);
-const numberWithCommas = (x) =>
-  x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+const isOperator = (operator) => REVERSE_BODMAS.includes(operator);
 
-function operate(num1, num2, operator) {
-  switch (operator) {
-    case "+":
-      return num1 + num2;
-    case "-":
-      return num1 - num2;
-    case "x":
-      return num1 * num2;
-    case "÷":
-      return num1 / num2;
+// main
+panelButtons.addEventListener("click", (event) => {
+  const repr = event.target.dataset.repr;
+  updateQueue(repr);
+  updateDisplay();
+});
+
+function updateQueue(input) {
+  if (input === "calc") {
+    computeResult();
+  } else if (isOperator(input)) {
+    handleOperator(input);
+  } else if (input === "clear") {
+    queue.length = 0;
+  } else if (isStringNumeric(input)) {
+    handleNumeric(input);
   }
+}
+
+function updateDisplay() {
+  const formattedQueue = queue.map((elem) => {
+    if (Number.isFinite(elem)) {
+      // format to 2dp and add commas for large numbers
+      elem = Math.round(elem * 100) / 100;
+      return elem.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+      // replace * and / with common symbols for display
+      return elem.replace("*", "x").replace("/", "÷");
+    }
+  });
+  panelDisplay.textContent = formattedQueue.join(" ");
 }
 
 function computeResult() {
   let priorityOperator;
   do {
-    priorityOperator = REVERSE_PRIORITY_ORDER.reduce((priority, operator) => {
+    priorityOperator = REVERSE_BODMAS.reduce((priority, operator) => {
       return queue.includes(operator) ? operator : priority;
     }, null);
     if (priorityOperator) {
@@ -44,9 +82,17 @@ function computeResult() {
   } while (priorityOperator);
 }
 
-function updateDisplay() {
-  const stringQueue = queue.map(numberWithCommas);
-  panelDisplay.textContent = stringQueue.join(" ");
+function operate(num1, num2, operator) {
+  switch (operator) {
+    case "+":
+      return num1 + num2;
+    case "-":
+      return num1 - num2;
+    case "*":
+      return num1 * num2;
+    case "/":
+      return num1 / num2;
+  }
 }
 
 function handleNumeric(val) {
@@ -66,21 +112,3 @@ function handleOperator(op) {
     queue.push(op);
   }
 }
-
-function updateQueue(input) {
-  if (input === "=") {
-    computeResult();
-  } else if (isOperator(input)) {
-    handleOperator(input);
-  } else if (input === "ac") {
-    queue.length = 0;
-  } else if (isStringNumeric(input)) {
-    handleNumeric(input);
-  }
-}
-
-panelButtons.addEventListener("click", (event) => {
-  const input = event.target.dataset.input;
-  updateQueue(input);
-  updateDisplay();
-});
