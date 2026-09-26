@@ -30,7 +30,9 @@ const SORTED_OPERATORS = Object.entries(OPERATOR_PRECEDENCE)
   .sort(([, a], [, b]) => b - a)
   .map((arr) => arr[0]);
 const queue = [0];
+let errorMsg = null;
 let lastInput;
+class DivZeroError extends Error {}
 
 // select elements from DOM
 const panelButtons = document.querySelector("#panel-buttons");
@@ -58,7 +60,8 @@ function handleInput(input) {
   if (input === "calc") {
     computeResult();
   } else if (input === "clear") {
-    clearQueue();
+    resetQueue(0);
+    clearErrors();
   } else {
     modifyQueue(input);
   }
@@ -70,8 +73,17 @@ function computeResult() {
   // do not compute if operator is last in queue
   if (isValidOperator(queue.at(-1))) return;
 
-  for (const op of SORTED_OPERATORS) {
-    reduceQueue(op);
+  try {
+    for (const op of SORTED_OPERATORS) {
+      reduceQueue(op);
+    }
+  } catch (err) {
+    if (err instanceof DivZeroError) {
+      resetQueue(0);
+      errorMsg = "Cannot divide by zero!";
+    } else {
+      throw err;
+    }
   }
 }
 
@@ -80,6 +92,8 @@ function reduceQueue(op) {
   while (opIdx !== -1) {
     const num1 = queue[opIdx - 1];
     const num2 = queue[opIdx + 1];
+
+    if (op === "/" && num2 === 0) throw new DivZeroError("Division by zero");
     queue.splice(opIdx - 1, 3, operate(num1, num2, op));
     opIdx = queue.indexOf(op);
   }
@@ -98,8 +112,12 @@ function operate(num1, num2, operator) {
   }
 }
 
-function clearQueue() {
-  queue.length = 0;
+function resetQueue(num) {
+  queue.splice(0, Infinity, num);
+}
+
+function clearErrors() {
+  errorMsg = null;
 }
 
 function modifyQueue(input) {
@@ -114,18 +132,19 @@ function modifyQueueNumber(str) {
   const num = Number(str);
   if (Number.isFinite(queue.at(-1))) {
     if (lastInput === "calc") {
-      clearQueue();
-      queue.push(num);
+      resetQueue(num);
     } else {
       queue.splice(-1, 1, Number(String(queue.at(-1)) + str));
     }
   } else {
     queue.push(num);
   }
+  // Need to clear errors if number successfully passed into queue
+  clearErrors();
 }
 
 function modifyQueueOperator(op) {
-  if (queue.length === 0) return;
+  if (queue.length === 0 || errorMsg) return;
   if (isValidOperator(queue.at(-1))) {
     queue.splice(-1, 1, op);
   } else {
@@ -147,6 +166,7 @@ function updateDisplay() {
       return elem.replace("*", "x").replace("/", "÷");
     }
   });
-  panelDisplay.textContent = formattedQueue.join(" ");
-  console.log(queue, lastInput);
+
+  // show either queue or error message if present
+  panelDisplay.textContent = errorMsg ? errorMsg : formattedQueue.join(" ");
 }
