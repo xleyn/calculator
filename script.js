@@ -52,7 +52,9 @@ const panelDisplay = document.querySelector("#panel-display");
 panelButtons.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
-  handleInput(button.dataset.repr);
+  const repr = button.dataset.repr;
+  if (repr === undefined) return;
+  handleInput();
 });
 // also need to monitor keydown events, convert to internal representation and pass to input handler function
 window.addEventListener("keydown", (event) => {
@@ -64,7 +66,7 @@ window.addEventListener("keydown", (event) => {
 updateDisplay();
 
 // --------- SIMPLE UTILITY FUNCTIONS ---------
-const isStringNumeric = (a) => Number.isFinite(Number(a));
+const isNumericString = (a) => Number.isFinite(Number(a));
 const isValidOperator = (operator) => SORTED_OPERATORS.includes(operator);
 
 // --------- BIGGER HELPER FUNCTIONS ---------
@@ -161,7 +163,7 @@ function handleBackspace() {
   if (typeof last !== "string") {
     last = String(last);
   }
-  if (isStringNumeric(last)) {
+  if (isNumericString(last)) {
     // handle when numbers last in queue
     if (last.length === 1) {
       if (queue.length === 1) {
@@ -186,7 +188,7 @@ function addToQueue(input) {
   // two possible inputs - operators or numbers - pass to relevant function
   if (isValidOperator(input)) {
     addToQueueOperator(input);
-  } else if (isStringNumeric(input)) {
+  } else if (isNumericString(input)) {
     addToQueueNumber(input);
   }
 }
@@ -241,5 +243,4 @@ function updateDisplay() {
 
   // show either queue or error message if present
   panelDisplay.textContent = errorMsg ? errorMsg : formattedQueue.join(" ");
-  console.log(lastInput);
 }
