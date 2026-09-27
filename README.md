@@ -1,0 +1,1 @@
+This project is a simple arithmetic calculator that utilises frontend technologies only. Completed as part of the Odin Project Foundations course, I further developed my HTML, CSS and JS skills through this experience. 
