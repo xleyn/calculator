@@ -20,6 +20,7 @@ const KEYS_TO_REPR = {
   Escape: "clear",
   c: "clear",
   Backspace: "backspace",
+  ".": ".",
 };
 
 // controls BODMAS order - higher number is greater precedence!
@@ -156,7 +157,11 @@ function handleBackspace() {
   }
   if (isStringNumeric(last)) {
     if (last.length === 1) {
-      queue.pop(last);
+      if (queue.length === 1) {
+        resetQueue(0);
+      } else {
+        queue.pop(last);
+      }
     } else {
       queue.splice(-1, 1, Number(last.slice(0, -1)));
     }
