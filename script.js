@@ -76,7 +76,7 @@ function handleInput(input) {
     clearErrors();
   } else {
     // otherwise input needs to modify the queue
-    modifyQueue(input);
+    addToQueue(input);
   }
 
   // need to track type of input and update display
@@ -141,16 +141,16 @@ function clearErrors() {
   errorMsg = null;
 }
 
-function modifyQueue(input) {
+function addToQueue(input) {
   // two possible inputs - operators or numbers - pass to relevant function
   if (isValidOperator(input)) {
-    modifyQueueOperator(input);
+    addToQueueOperator(input);
   } else if (isStringNumeric(input)) {
-    modifyQueueNumber(input);
+    addToQueueNumber(input);
   }
 }
 
-function modifyQueueNumber(str) {
+function addToQueueNumber(str) {
   const num = Number(str);
   if (Number.isFinite(queue.at(-1))) {
     // run if last element of queue array is a number
@@ -169,7 +169,7 @@ function modifyQueueNumber(str) {
   clearErrors();
 }
 
-function modifyQueueOperator(op) {
+function addToQueueOperator(op) {
   // Do not process if empty queue or an error
   if (queue.length === 0 || errorMsg) return;
   if (isValidOperator(queue.at(-1))) {
@@ -183,7 +183,8 @@ function modifyQueueOperator(op) {
 
 function updateDisplay() {
   function fmt(num) {
-    return (Math.round(num * 100) / 100)
+    const dp = 4;
+    return (Math.round(num * 10 ** dp) / 10 ** dp)
       .toString()
       .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
