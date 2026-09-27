@@ -15,6 +15,7 @@ const KEYS_TO_REPR = {
   "-": "-",
   "*": "*",
   "/": "/",
+  "^": "^",
   Enter: "calc",
   "=": "calc",
   Escape: "clear",
@@ -29,6 +30,7 @@ const OPERATOR_PRECEDENCE = {
   "-": 1,
   "*": 2,
   "/": 2,
+  "^": 3,
 };
 // Convenient to evaluate OPERATOR_PRECEDENCE so order of operation stored in an array
 const SORTED_OPERATORS = Object.entries(OPERATOR_PRECEDENCE)
@@ -119,6 +121,8 @@ function operate(num1, num2, operator) {
       return String(num1 * num2);
     case "/":
       return String(num1 / num2);
+    case "^":
+      return String(num1 ** num2);
   }
 }
 
