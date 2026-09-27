@@ -184,7 +184,9 @@ function handleBackspace() {
 }
 
 function handleDecimalPoint() {
-  if (numberAtQueueEnd() && !queue.at(-1).includes(".")) {
+  if (lastInput === "calc") {
+    resetQueue("0.");
+  } else if (numberAtQueueEnd() && !queue.at(-1).includes(".")) {
     queue.splice(-1, 1, queue.at(-1) + ".");
   } else if (operatorAtQueueEnd()) {
     queue.push("0.");
