@@ -116,18 +116,27 @@ function operate(num1, num2, operator) {
   // perform arithmetic operation on string inputs
   num1 = Number(num1);
   num2 = Number(num2);
+  let res;
   switch (operator) {
     case "+":
-      return String(num1 + num2);
+      res = num1 + num2;
+      break;
     case "-":
-      return String(num1 - num2);
+      res = num1 - num2;
+      break;
     case "*":
-      return String(num1 * num2);
+      res = num1 * num2;
+      break;
     case "/":
-      return String(num1 / num2);
+      res = num1 / num2;
+      break;
     case "^":
-      return String(num1 ** num2);
+      res = num1 ** num2;
+      break;
   }
+
+  const dp = 5;
+  return String(Math.round(res * 10 ** dp) / 10 ** dp);
 }
 
 function handleClear() {
@@ -175,8 +184,7 @@ function handleBackspace() {
 }
 
 function handleDecimalPoint() {
-  const dpCount = (queue.at(-1).match(/\./g) || []).length;
-  if (numberAtQueueEnd() && dpCount === 0) {
+  if (numberAtQueueEnd() && !queue.at(-1).includes(".")) {
     queue.splice(-1, 1, queue.at(-1) + ".");
   } else if (operatorAtQueueEnd()) {
     queue.push("0.");
@@ -223,13 +231,13 @@ function addToQueueNumber(num) {
 }
 
 function updateDisplay() {
-  function fmt(numStr, dp) {
+  function fmt(numStr) {
     return numStr.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
   // Convert all elements in queue to formatted string
   const formattedQueue = queue.map((elem) => {
     if (isNumericString(elem)) {
-      return fmt(elem, 4);
+      return fmt(elem);
     } else {
       // replace * and / with common symbols for display
       return elem.replace("*", "x").replace("/", "÷");
@@ -238,7 +246,6 @@ function updateDisplay() {
 
   // show either queue or error message if present
   panelDisplay.textContent = errorMsg ? errorMsg : formattedQueue.join(" ");
-  console.log(queue);
 }
 
 // --------- MAIN JS SETUP ---------
