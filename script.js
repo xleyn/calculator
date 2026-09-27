@@ -152,19 +152,31 @@ function clearErrors() {
 
 function handleBackspace() {
   let last = queue.at(-1);
+
+  // if backspacing after a calculation, reset queue to zero so can't modify calculation result
+  if (lastInput === "calc") {
+    resetQueue(0);
+    return;
+  }
   if (typeof last !== "string") {
     last = String(last);
   }
   if (isStringNumeric(last)) {
+    // handle when numbers last in queue
     if (last.length === 1) {
       if (queue.length === 1) {
+        // if there's only one number in queue and it's single digit, reset queue to zero
         resetQueue(0);
       } else {
+        // otherwise remove number from queue
         queue.pop(last);
       }
     } else {
+      // if number is multi-digit, take off last digit
       queue.splice(-1, 1, Number(last.slice(0, -1)));
     }
+
+    // if operator, remove from queue
   } else if (isValidOperator(last)) {
     queue.pop(last);
   }
@@ -229,5 +241,5 @@ function updateDisplay() {
 
   // show either queue or error message if present
   panelDisplay.textContent = errorMsg ? errorMsg : formattedQueue.join(" ");
-  console.log(queue);
+  console.log(lastInput);
 }
