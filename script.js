@@ -52,6 +52,8 @@ const panelDisplay = document.querySelector("#panel-display");
 // --------- SIMPLE UTILITY FUNCTIONS ---------
 const isNumericString = (a) => Number.isFinite(Number(a));
 const isValidOperator = (operator) => SORTED_OPERATORS.includes(operator);
+const operatorAtQueueEnd = () => isValidOperator(queue.at(-1));
+const numberAtQueueEnd = () => isNumericString(queue.at(-1));
 
 // --------- BIGGER HELPER FUNCTIONS ---------
 
@@ -64,6 +66,8 @@ function handleInput(input) {
     handleClear();
   } else if (input === "backspace") {
     handleBackspace();
+  } else if (input === ".") {
+    handleDecimalPoint();
   } else {
     // otherwise input needs to modify the queue
     addToQueue(input);
@@ -76,7 +80,7 @@ function handleInput(input) {
 
 function computeResult() {
   // do not compute if operator is last in queue as invalid
-  if (isValidOperator(queue.at(-1))) return;
+  if (operatorAtQueueEnd()) return;
 
   try {
     // try and evaluate queue in order using BODMAS
@@ -129,6 +133,7 @@ function operate(num1, num2, operator) {
 function handleClear() {
   resetQueue();
   clearErrors();
+  lastInput = undefined;
 }
 
 function resetQueue(num = "0") {
@@ -148,7 +153,7 @@ function handleBackspace() {
     resetQueue();
     return;
   }
-  if (isNumericString(last)) {
+  if (numberAtQueueEnd()) {
     // handle when numbers last in queue
     if (last.length === 1) {
       if (queue.length === 1) {
@@ -164,8 +169,17 @@ function handleBackspace() {
     }
 
     // if operator, remove from queue
-  } else if (isValidOperator(last)) {
+  } else if (operatorAtQueueEnd()) {
     queue.pop(last);
+  }
+}
+
+function handleDecimalPoint() {
+  const dpCount = (queue.at(-1).match(/\./g) || []).length;
+  if (numberAtQueueEnd() && dpCount === 0) {
+    queue.splice(-1, 1, queue.at(-1) + ".");
+  } else if (operatorAtQueueEnd()) {
+    queue.push("0.");
   }
 }
 
@@ -181,7 +195,7 @@ function addToQueue(input) {
 function addToQueueOperator(op) {
   // Do not process if empty queue or an error
   if (queue.length === 0 || errorMsg) return;
-  if (isValidOperator(queue.at(-1))) {
+  if (operatorAtQueueEnd()) {
     // If an operator is already at the end of the queue, replace it
     queue.splice(-1, 1, op);
   } else {
@@ -191,7 +205,7 @@ function addToQueueOperator(op) {
 }
 
 function addToQueueNumber(num) {
-  if (isNumericString(queue.at(-1))) {
+  if (numberAtQueueEnd()) {
     // run if last element of queue array is a number
     if (lastInput === "calc" || queue.at(-1) === "0") {
       // Need to reset the queue to input if typing another number immediately after a calculation or on top of zero
@@ -200,7 +214,7 @@ function addToQueueNumber(num) {
       // Otherwise need to concatenate new input with existing number at end of queue e.g. "7" -> "76"
       queue.splice(-1, 1, queue.at(-1) + num);
     }
-  } else {
+  } else if (operatorAtQueueEnd()) {
     // Otherwise operator is at end of queue - push number to end
     queue.push(num);
   }
@@ -210,9 +224,7 @@ function addToQueueNumber(num) {
 
 function updateDisplay() {
   function fmt(numStr, dp) {
-    return (Math.round(Number(numStr) * 10 ** dp) / 10 ** dp)
-      .toString()
-      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return numStr.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
   // Convert all elements in queue to formatted string
   const formattedQueue = queue.map((elem) => {
