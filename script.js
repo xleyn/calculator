@@ -19,6 +19,7 @@ const KEYS_TO_REPR = {
   "=": "calc",
   Escape: "clear",
   c: "clear",
+  Backspace: "backspace",
 };
 
 // controls BODMAS order - higher number is greater precedence!
@@ -48,8 +49,9 @@ const panelDisplay = document.querySelector("#panel-display");
 // --------- MAIN JS SETUP ---------
 // listen to button clicks and pass to input handler function
 panelButtons.addEventListener("click", (event) => {
-  const repr = event.target.dataset.repr;
-  handleInput(repr);
+  const button = event.target.closest("button");
+  if (!button) return;
+  handleInput(button.dataset.repr);
 });
 // also need to monitor keydown events, convert to internal representation and pass to input handler function
 window.addEventListener("keydown", (event) => {
@@ -72,8 +74,9 @@ function handleInput(input) {
     computeResult();
   } else if (input === "clear") {
     // handle clearing input e.g. AC
-    resetQueue(0);
-    clearErrors();
+    handleClear();
+  } else if (input === "backspace") {
+    handleBackspace();
   } else {
     // otherwise input needs to modify the queue
     addToQueue(input);
@@ -132,6 +135,11 @@ function operate(num1, num2, operator) {
   }
 }
 
+function handleClear() {
+  resetQueue(0);
+  clearErrors();
+}
+
 function resetQueue(num) {
   // reset queue to [num]
   queue.splice(0, Infinity, num);
@@ -139,6 +147,22 @@ function resetQueue(num) {
 
 function clearErrors() {
   errorMsg = null;
+}
+
+function handleBackspace() {
+  let last = queue.at(-1);
+  if (typeof last !== "string") {
+    last = String(last);
+  }
+  if (isStringNumeric(last)) {
+    if (last.length === 1) {
+      queue.pop(last);
+    } else {
+      queue.splice(-1, 1, Number(last.slice(0, -1)));
+    }
+  } else if (isValidOperator(last)) {
+    queue.pop(last);
+  }
 }
 
 function addToQueue(input) {
