@@ -26,6 +26,10 @@ h1 {
     min-width: calc((100% - 3*var(--button-gap))/ 4);
 }
 
+.btn:active {
+    background-color: rgb(117, 173, 177);
+}
+
 #panel-calculator {
     display: flex;
     justify-content: center;
