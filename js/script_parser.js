@@ -64,7 +64,9 @@ function handleAction(action) {
     const parser = new Parser(tokens);
     const ast = parser.parse();
     const evaluator = new Evaluator(ast);
-    console.log(evaluator.evaluate());
+    const result = evaluator.evaluate();
+    clearDisplay();
+    addToDisplay(result);
   }
 }
 
