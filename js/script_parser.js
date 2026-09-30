@@ -47,10 +47,14 @@ function backspaceDisplay() {
 
 function processCode(code) {
   if (isInput(code)) {
-    addToDisplay(code);
+    handleInput(code);
   } else if (isAction(code)) {
     handleAction(code);
   }
+}
+
+function handleInput(input) {
+  addToDisplay(input);
 }
 
 function handleAction(action) {
