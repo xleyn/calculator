@@ -9,10 +9,13 @@ export class Evaluator {
 
   evaluateNode(node) {
     let left = node.left;
-    const right = node.right;
+    let right = node.right;
 
     if (left.type !== "number") {
       left = this.evaluateNode(left);
+    }
+    if (right.type !== "number") {
+      right = this.evaluateNode(right);
     }
     const op = node.operator;
     const leftVal = Number(left.value);

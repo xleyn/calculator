@@ -47,8 +47,17 @@ export class Parser {
   }
 
   parsePrimary() {
-    if (this.current() && this.current().type === "number") {
+    if (!this.current()) return;
+    const currentType = this.current().type;
+    if (currentType === "number") {
       return this.consume();
+    } else if (currentType === "lBracket") {
+      this.consume();
+      const res = this.parseAddSub();
+      if (this.current().type !== "rBracket")
+        throw Error("Right bracket is missing!");
+      this.consume();
+      return res;
     }
   }
 
