@@ -13,15 +13,13 @@ class Tokenizer {
       const [char, type] = this.popQueue();
       if (this.memory.length === 0 || type === this.memoryType) {
         this.addToMemory(char, type);
-        if (this.queue.length === 0) {
-          this.storeMemoryAsToken();
-        }
       } else {
         this.storeMemoryAsToken();
         this.resetMemory();
         this.addToMemory(char, type);
       }
     }
+    this.storeMemoryAsToken();
     return this.tokens;
   }
 
@@ -62,6 +60,65 @@ class Tokenizer {
 
   static isOperator(char) {
     return this.OPERATORS.includes(char);
+  }
+}
+
+class Parser {
+  constructor(tokens) {
+    this.tokens = tokens;
+    this.position = 0;
+  }
+
+  current() {
+    return this.tokens[this.position];
+  }
+
+  consume() {
+    return this.tokens[this.position++];
+  }
+
+  parse() {
+    return this.parseAddSub();
+  }
+
+  parseAddSub() {
+    let res = this.parseMulDiv();
+
+    while (
+      this.current() &&
+      (this.current().value === "+" || this.current().value === "-")
+    ) {
+      const op = this.consume().value;
+      const right = this.parseMulDiv();
+      res = Parser.createASTNode(op, res, right);
+    }
+
+    return res;
+  }
+
+  parseMulDiv() {
+    let res = this.parsePrimary();
+
+    while (
+      this.current() &&
+      (this.current().value === "*" || this.current().value === "/")
+    ) {
+      const op = this.consume().value;
+      const right = this.parsePrimary();
+      res = Parser.createASTNode(op, res, right);
+    }
+
+    return res;
+  }
+
+  parsePrimary() {
+    if (this.current() && this.current().type === "number") {
+      return this.consume();
+    }
+  }
+
+  static createASTNode(operator, left, right) {
+    return { operator: operator, left, right };
   }
 }
 
@@ -124,7 +181,9 @@ function handleAction(action) {
   } else if (action === "calculate") {
     const tokenizer = new Tokenizer(panelDisplay.textContent);
     const tokens = tokenizer.tokenize();
-    console.log(tokens);
+    const parser = new Parser(tokens);
+    const ast = parser.parse();
+    console.log(ast);
   }
 }
 
