@@ -1,5 +1,5 @@
 export class Tokeniser {
-  static OPERATORS = ["+", "-", "/", "*"];
+  static OPERATORS = ["+", "-", "/", "*", "^"];
 
   constructor(inputString) {
     this.queue = inputString.split("").reverse();

@@ -32,18 +32,29 @@ export class Parser {
   }
 
   parseMulDiv() {
-    let res = this.parsePrimary();
+    let res = this.parseExponents();
 
     while (
       this.current() &&
       (this.current().value === "*" || this.current().value === "/")
     ) {
       const op = this.consume().value;
-      const right = this.parsePrimary();
+      const right = this.parseExponents();
       res = Parser.createASTNode(op, res, right);
     }
 
     return res;
+  }
+
+  parseExponents() {
+    let res = this.parsePrimary();
+
+    if (!this.current() || this.current().value !== "^") return res;
+
+    this.consume();
+    const right = this.parseExponents();
+
+    return Parser.createASTNode("^", res, right);
   }
 
   parsePrimary() {

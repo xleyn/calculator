@@ -19,6 +19,7 @@ const KEY_TO_CODE = {
   "-": "-",
   "*": "*",
   "/": "/",
+  "^": "^",
   Enter: "calculate",
   "=": "calculate",
   Escape: "clear",

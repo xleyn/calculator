@@ -28,6 +28,8 @@ export class Evaluator {
       return Evaluator.createNode("number", leftVal * rightVal);
     } else if (op === "/") {
       return Evaluator.createNode("number", leftVal / rightVal);
+    } else if (op === "^") {
+      return Evaluator.createNode("number", leftVal ** rightVal);
     }
   }
 
