@@ -74,10 +74,37 @@ function processCode(code) {
 }
 
 function handleInput(input) {
+  if (!inputAllowed(input)) return;
+  modifyExpressionPreInput(input);
+  addToExpression(input);
+}
+
+function inputAllowed(input) {
+  if (input === ".") {
+    const idxLastOp = Math.max(
+      expression.lastIndexOf("+"),
+      expression.lastIndexOf("-"),
+      expression.lastIndexOf("*"),
+      expression.lastIndexOf("/"),
+      expression.lastIndexOf("^"),
+      -1,
+    );
+    if (expression.slice(idxLastOp + 1).includes(".")) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function modifyExpressionPreInput(input) {
   if (lastInput === "calculate" && Tokeniser.isNumerical(input)) {
     clearExpression();
+  } else if (
+    Tokeniser.isOperator(input) &&
+    Tokeniser.isOperator(expression.at(-1))
+  ) {
+    backspaceExpression();
   }
-  addToExpression(input);
 }
 
 function handleAction(action) {
