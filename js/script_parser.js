@@ -20,6 +20,7 @@ const KEY_TO_CODE = {
   "*": "*",
   "/": "/",
   "^": "^",
+  ".": ".",
   Enter: "calculate",
   "=": "calculate",
   Escape: "clear",
@@ -38,11 +39,17 @@ const panelButtons = document.querySelector("#panel-buttons");
 const panelDisplay = document.querySelector("#panel-display");
 
 let expression = "";
+let lastInput = null;
+updateDisplay();
 
 function updateDisplay() {
-  panelDisplay.textContent = [...expression]
-    .map((char) => DISPLAY_SYMBOLS[char] ?? char)
-    .join("");
+  if (expression === "") {
+    panelDisplay.textContent = "0";
+  } else {
+    panelDisplay.textContent = [...expression]
+      .map((char) => DISPLAY_SYMBOLS[char] ?? char)
+      .join("");
+  }
 }
 
 function addToExpression(input) {
@@ -63,9 +70,13 @@ function processCode(code) {
   } else if (isAction(code)) {
     handleAction(code);
   }
+  lastInput = code;
 }
 
 function handleInput(input) {
+  if (lastInput === "calculate" && Tokeniser.isNumerical(input)) {
+    clearExpression();
+  }
   addToExpression(input);
 }
 

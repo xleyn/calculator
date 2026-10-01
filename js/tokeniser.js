@@ -46,7 +46,7 @@ export class Tokeniser {
   }
 
   static getType(char) {
-    if (Tokeniser.isNumerical(char)) {
+    if (Tokeniser.isNumerical(char) || char === ".") {
       return "number";
     } else if (Tokeniser.isOperator(char)) {
       return "operator";
