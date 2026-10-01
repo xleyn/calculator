@@ -11,7 +11,10 @@ export class Tokeniser {
   tokenise() {
     while (this.queue.length > 0) {
       const [char, type] = this.popQueue();
-      if (this.memory.length === 0 || type === this.memoryType) {
+      if (
+        this.memory.length === 0 ||
+        (type !== "operator" && type === this.memoryType)
+      ) {
         this.addToMemory(char, type);
       } else {
         this.storeMemoryAsToken();

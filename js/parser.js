@@ -1,4 +1,6 @@
 export class Parser {
+  static NEGATIVE = { type: "number", value: "-1" };
+
   constructor(tokens) {
     this.tokens = tokens;
     this.position = 0;
@@ -50,14 +52,25 @@ export class Parser {
   }
 
   parseExponents() {
-    let res = this.parsePrimary();
+    let res = this.parseUnary();
 
     if (!this.current() || this.current().value !== "^") return res;
 
     this.consume();
-    const right = this.parseExponents();
+    const right = this.parseUnary();
 
     return Parser.createASTNode("^", res, right);
+  }
+
+  parseUnary() {
+    if (this.current() && this.current().value === "-") {
+      this.consume();
+      const right = this.parseExponents();
+
+      return Parser.createASTNode("*", Parser.NEGATIVE, right);
+    }
+
+    return this.parsePrimary();
   }
 
   parsePrimary() {

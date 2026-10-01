@@ -103,7 +103,14 @@ function modifyExpressionPreInput(input) {
     Tokeniser.isOperator(input) &&
     Tokeniser.isOperator(expression.at(-1))
   ) {
-    backspaceExpression();
+    if (
+      !(
+        (expression.at(-1) === "*" || expression.at(-1) === "^") &&
+        input === "-"
+      )
+    ) {
+      backspaceExpression();
+    }
   }
 }
 
@@ -119,6 +126,7 @@ function handleAction(action) {
     const ast = parser.parse();
     const evaluator = new Evaluator(ast);
     const result = evaluator.evaluate();
+    console.log(ast);
     clearExpression();
     addToExpression(result);
   }
