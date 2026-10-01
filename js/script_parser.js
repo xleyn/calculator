@@ -25,7 +25,10 @@ const KEY_TO_CODE = {
   c: "clear",
   Backspace: "backspace",
 };
-
+const DISPLAY_SYMBOLS = {
+  "*": "×",
+  "/": "÷",
+};
 const ACTION_CODES = ["calculate", "clear", "backspace"];
 const isAction = (code) => ACTION_CODES.includes(code);
 const isInput = (code) => !isAction(code);
@@ -33,16 +36,24 @@ const isInput = (code) => !isAction(code);
 const panelButtons = document.querySelector("#panel-buttons");
 const panelDisplay = document.querySelector("#panel-display");
 
-function addToDisplay(input) {
-  panelDisplay.textContent += input;
+let expression = "";
+
+function updateDisplay() {
+  panelDisplay.textContent = [...expression]
+    .map((char) => DISPLAY_SYMBOLS[char] ?? char)
+    .join("");
 }
 
-function clearDisplay() {
-  panelDisplay.textContent = "";
+function addToExpression(input) {
+  expression += input;
 }
 
-function backspaceDisplay() {
-  panelDisplay.textContent = panelDisplay.textContent.slice(0, -1);
+function clearExpression() {
+  expression = "";
+}
+
+function backspaceExpression() {
+  expression = expression.slice(0, -1);
 }
 
 function processCode(code) {
@@ -54,31 +65,33 @@ function processCode(code) {
 }
 
 function handleInput(input) {
-  addToDisplay(input);
+  addToExpression(input);
 }
 
 function handleAction(action) {
   if (action === "clear") {
-    clearDisplay();
+    clearExpression();
   } else if (action === "backspace") {
-    backspaceDisplay();
+    backspaceExpression();
   } else if (action === "calculate") {
-    const tokeniser = new Tokeniser(panelDisplay.textContent);
+    const tokeniser = new Tokeniser(expression);
     const tokens = tokeniser.tokenise();
     const parser = new Parser(tokens);
     const ast = parser.parse();
     const evaluator = new Evaluator(ast);
     const result = evaluator.evaluate();
-    clearDisplay();
-    addToDisplay(result);
+    clearExpression();
+    addToExpression(result);
   }
 }
 
 panelButtons.addEventListener("click", (event) => {
   const code = event.target.closest("button").dataset.code;
   if (code !== undefined) processCode(code);
+  updateDisplay();
 });
 window.addEventListener("keydown", (event) => {
   const code = KEY_TO_CODE[event.key];
   if (code !== undefined) processCode(code);
+  updateDisplay();
 });
