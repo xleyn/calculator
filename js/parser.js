@@ -36,9 +36,12 @@ export class Parser {
 
     while (
       this.current() &&
-      (this.current().value === "*" || this.current().value === "/")
+      (this.current().value === "*" ||
+        this.current().value === "/" ||
+        this.current().type === "lBracket")
     ) {
-      const op = this.consume().value;
+      const op =
+        this.current().type === "lBracket" ? "*" : this.consume().value;
       const right = this.parseExponents();
       res = Parser.createASTNode(op, res, right);
     }
