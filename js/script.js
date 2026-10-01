@@ -1,6 +1,8 @@
-// --------- GLOBAL VARIABLES ---------
-// need to map keyboard keys to internal representations
-const KEYS_TO_REPR = {
+import { Parser } from "./parser.js";
+import { Tokeniser } from "./tokeniser.js";
+import { Evaluator } from "./evaluator.js";
+
+const KEY_TO_CODE = {
   0: "0",
   1: "1",
   2: "2",
@@ -11,259 +13,124 @@ const KEYS_TO_REPR = {
   7: "7",
   8: "8",
   9: "9",
+  "(": "(",
+  ")": ")",
   "+": "+",
   "-": "-",
   "*": "*",
   "/": "/",
   "^": "^",
-  Enter: "calc",
-  "=": "calc",
+  ".": ".",
+  Enter: "calculate",
+  "=": "calculate",
   Escape: "clear",
   c: "clear",
   Backspace: "backspace",
-  ".": ".",
 };
-
-// controls BODMAS order - higher number is greater precedence!
-const OPERATOR_PRECEDENCE = {
-  "+": 1,
-  "-": 1,
-  "*": 2,
-  "/": 2,
-  "^": 3,
+const DISPLAY_SYMBOLS = {
+  "*": "×",
+  "/": "÷",
 };
-// Convenient to evaluate OPERATOR_PRECEDENCE so order of operation stored in an array
-const SORTED_OPERATORS = Object.entries(OPERATOR_PRECEDENCE)
-  .sort(([, a], [, b]) => b - a)
-  .map((arr) => arr[0]);
+const ACTION_CODES = ["calculate", "clear", "backspace"];
+const isAction = (code) => ACTION_CODES.includes(code);
+const isInput = (code) => !isAction(code);
 
-// Need a queue to store arithmetic operations (both numbers and operators)
-const queue = ["0"];
-
-// store errors are last input for convenience
-let errorMsg = null;
-let lastInput;
-class DivZeroError extends Error {}
-
-// SELECT ELEMENTS FROM THE DOM
 const panelButtons = document.querySelector("#panel-buttons");
 const panelDisplay = document.querySelector("#panel-display");
 
-// --------- SIMPLE UTILITY FUNCTIONS ---------
-const isNumericString = (a) => Number.isFinite(Number(a));
-const isValidOperator = (operator) => SORTED_OPERATORS.includes(operator);
-const operatorAtQueueEnd = () => isValidOperator(queue.at(-1));
-const numberAtQueueEnd = () => isNumericString(queue.at(-1));
-
-// --------- BIGGER HELPER FUNCTIONS ---------
-
-function handleInput(input) {
-  if (input === "calc") {
-    // handle calculation
-    computeResult();
-  } else if (input === "clear") {
-    // handle clearing input e.g. AC
-    handleClear();
-  } else if (input === "backspace") {
-    handleBackspace();
-  } else if (input === ".") {
-    handleDecimalPoint();
-  } else {
-    // otherwise input needs to modify the queue
-    addToQueue(input);
-  }
-
-  // need to track type of input and update display
-  lastInput = input;
-  updateDisplay();
-}
-
-function computeResult() {
-  // do not compute if operator is last in queue as invalid
-  if (operatorAtQueueEnd()) return;
-
-  try {
-    // try and evaluate queue in order using BODMAS
-    for (const op of SORTED_OPERATORS) {
-      reduceQueue(op);
-    }
-  } catch (err) {
-    // catch zero division error and display
-    if (err instanceof DivZeroError) {
-      resetQueue("0");
-      errorMsg = "Cannot divide by zero!";
-    } else {
-      throw err;
-    }
-  }
-}
-
-function reduceQueue(op) {
-  let opIdx = queue.indexOf(op);
-  // keep evaluating expressions around operator until all instances of operator disappear
-  while (opIdx !== -1) {
-    const num1 = queue[opIdx - 1];
-    const num2 = queue[opIdx + 1];
-
-    // throw zero division error if appropriate
-    if (op === "/" && num2 === "0") throw new DivZeroError("Division by zero");
-    queue.splice(opIdx - 1, 3, operate(num1, num2, op));
-    opIdx = queue.indexOf(op);
-  }
-}
-
-function operate(num1, num2, operator) {
-  // perform arithmetic operation on string inputs
-  num1 = Number(num1);
-  num2 = Number(num2);
-  let res;
-  switch (operator) {
-    case "+":
-      res = num1 + num2;
-      break;
-    case "-":
-      res = num1 - num2;
-      break;
-    case "*":
-      res = num1 * num2;
-      break;
-    case "/":
-      res = num1 / num2;
-      break;
-    case "^":
-      res = num1 ** num2;
-      break;
-  }
-
-  const dp = 5;
-  return String(Math.round(res * 10 ** dp) / 10 ** dp);
-}
-
-function handleClear() {
-  resetQueue();
-  clearErrors();
-  lastInput = undefined;
-}
-
-function resetQueue(num = "0") {
-  // reset queue to [num]
-  queue.splice(0, Infinity, num);
-}
-
-function clearErrors() {
-  errorMsg = null;
-}
-
-function handleBackspace() {
-  let last = queue.at(-1);
-
-  // if backspacing after a calculation, reset queue to zero so can't modify calculation result
-  if (lastInput === "calc") {
-    resetQueue();
-    return;
-  }
-  if (numberAtQueueEnd()) {
-    // handle when numbers last in queue
-    if (last.length === 1) {
-      if (queue.length === 1) {
-        // if there's only one number in queue and it's single digit, reset queue to zero
-        resetQueue();
-      } else {
-        // otherwise remove number from queue
-        queue.pop(last);
-      }
-    } else {
-      // if number is multi-digit, take off last digit
-      queue.splice(-1, 1, last.slice(0, -1));
-    }
-
-    // if operator, remove from queue
-  } else if (operatorAtQueueEnd()) {
-    queue.pop(last);
-  }
-}
-
-function handleDecimalPoint() {
-  if (lastInput === "calc") {
-    resetQueue("0.");
-  } else if (numberAtQueueEnd() && !queue.at(-1).includes(".")) {
-    queue.splice(-1, 1, queue.at(-1) + ".");
-  } else if (operatorAtQueueEnd()) {
-    queue.push("0.");
-  }
-}
-
-function addToQueue(input) {
-  // two possible inputs - operators or numbers - pass to relevant function
-  if (isValidOperator(input)) {
-    addToQueueOperator(input);
-  } else if (isNumericString(input)) {
-    addToQueueNumber(input);
-  }
-}
-
-function addToQueueOperator(op) {
-  // Do not process if empty queue or an error
-  if (queue.length === 0 || errorMsg) return;
-  if (operatorAtQueueEnd()) {
-    // If an operator is already at the end of the queue, replace it
-    queue.splice(-1, 1, op);
-  } else {
-    // Otherwise push it (there's a number at end of queue)
-    queue.push(op);
-  }
-}
-
-function addToQueueNumber(num) {
-  if (numberAtQueueEnd()) {
-    // run if last element of queue array is a number
-    if (lastInput === "calc" || queue.at(-1) === "0") {
-      // Need to reset the queue to input if typing another number immediately after a calculation or on top of zero
-      resetQueue(num);
-    } else {
-      // Otherwise need to concatenate new input with existing number at end of queue e.g. "7" -> "76"
-      queue.splice(-1, 1, queue.at(-1) + num);
-    }
-  } else if (operatorAtQueueEnd()) {
-    // Otherwise operator is at end of queue - push number to end
-    queue.push(num);
-  }
-  // Can clear errors if number successfully passed into queue
-  clearErrors();
-}
+let expression = "";
+let lastInput = null;
+updateDisplay();
 
 function updateDisplay() {
-  function fmt(numStr) {
-    return numStr.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  if (expression === "") {
+    panelDisplay.textContent = "0";
+  } else {
+    panelDisplay.textContent = [...expression]
+      .map((char) => DISPLAY_SYMBOLS[char] ?? char)
+      .join("");
   }
-  // Convert all elements in queue to formatted string
-  const formattedQueue = queue.map((elem) => {
-    if (isNumericString(elem)) {
-      return fmt(elem);
-    } else {
-      // replace * and / with common symbols for display
-      return elem.replace("*", "x").replace("/", "÷");
-    }
-  });
-
-  // show either queue or error message if present
-  panelDisplay.textContent = errorMsg ? errorMsg : formattedQueue.join(" ");
 }
 
-// --------- MAIN JS SETUP ---------
-// listen to button clicks and pass to input handler function
+function addToExpression(input) {
+  expression += input;
+}
+
+function clearExpression() {
+  expression = "";
+}
+
+function backspaceExpression() {
+  expression = expression.slice(0, -1);
+}
+
+function processCode(code) {
+  if (isInput(code)) {
+    handleInput(code);
+  } else if (isAction(code)) {
+    handleAction(code);
+  }
+  lastInput = code;
+}
+
+function handleInput(input) {
+  if (!inputAllowed(input)) return;
+  modifyExpressionPreInput(input);
+  addToExpression(input);
+}
+
+function inputAllowed(input) {
+  if (input === ".") {
+    const idxLastOp = Math.max(
+      expression.lastIndexOf("+"),
+      expression.lastIndexOf("-"),
+      expression.lastIndexOf("*"),
+      expression.lastIndexOf("/"),
+      expression.lastIndexOf("^"),
+      -1,
+    );
+    if (expression.slice(idxLastOp + 1).includes(".")) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function modifyExpressionPreInput(input) {
+  if (lastInput === "calculate" && Tokeniser.isNumerical(input)) {
+    clearExpression();
+  } else if (
+    Tokeniser.isOperator(input) &&
+    Tokeniser.isOperator(expression.at(-1))
+  ) {
+    backspaceExpression();
+  }
+}
+
+function handleAction(action) {
+  if (action === "clear") {
+    clearExpression();
+  } else if (action === "backspace") {
+    backspaceExpression();
+  } else if (action === "calculate") {
+    const tokeniser = new Tokeniser(expression);
+    const tokens = tokeniser.tokenise();
+    const parser = new Parser(tokens);
+    const ast = parser.parse();
+    const evaluator = new Evaluator(ast);
+    const result = evaluator.evaluate();
+    clearExpression();
+    addToExpression(result);
+  }
+}
+
 panelButtons.addEventListener("click", (event) => {
-  const button = event.target.closest("button");
-  if (!button) return;
-  const repr = button.dataset.repr;
-  if (repr === undefined) return;
-  handleInput(repr);
+  const code = event.target.closest("button").dataset.code;
+  if (code !== undefined) processCode(code);
+  updateDisplay();
 });
-// also need to monitor keydown events, convert to internal representation and pass to input handler function
 window.addEventListener("keydown", (event) => {
-  const repr = KEYS_TO_REPR[event.key];
-  if (repr === undefined) return;
-  handleInput(repr);
+  const code = KEY_TO_CODE[event.key];
+  if (code !== undefined) processCode(code);
+  updateDisplay();
 });
-// show display to start with
-updateDisplay();
