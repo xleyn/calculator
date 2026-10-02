@@ -126,19 +126,23 @@ function handleAction(action) {
     const ast = parser.parse();
     const evaluator = new Evaluator(ast);
     const result = evaluator.evaluate();
-    console.log(ast);
     clearExpression();
     addToExpression(result);
   }
 }
 
 panelButtons.addEventListener("click", (event) => {
-  const code = event.target.closest("button").dataset.code;
+  const btn = event.target.closest("button");
+  const code = btn.dataset.code;
   if (code !== undefined) processCode(code);
   updateDisplay();
+  btn.blur();
 });
 window.addEventListener("keydown", (event) => {
   const code = KEY_TO_CODE[event.key];
-  if (code !== undefined) processCode(code);
-  updateDisplay();
+  if (code !== undefined) {
+    event.preventDefault();
+    processCode(code);
+    updateDisplay();
+  }
 });
