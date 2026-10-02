@@ -37,15 +37,14 @@ test("Parses chained multiplication", () => {
 
 test("Multiplication has precedence over addition/subtraction", () => {
   const parser = new Parser([
-    [
-      { type: "number", value: "2" },
-      { type: "operator", value: "*" },
-      { type: "number", value: "3" },
-      { type: "operator", value: "+" },
-      { type: "number", value: "4" },
-      { type: "operator", value: "-" },
-      { type: "number", value: "5" },
-    ],
+    { type: "number", value: "2" },
+    { type: "operator", value: "*" },
+    { type: "number", value: "3" },
+    { type: "operator", value: "+" },
+    { type: "number", value: "4" },
+    { type: "operator", value: "-" },
+    { type: "number", value: "5" },
+    ,
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
