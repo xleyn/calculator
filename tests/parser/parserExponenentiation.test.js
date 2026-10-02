@@ -26,6 +26,11 @@ test("Parses chained exponentiation from right to left", () => {
     type: "operator",
     operator: "^",
     left: { type: "number", value: "10" },
-    right: { type: "number", value: "2" },
+    right: {
+      type: "operator",
+      operator: "^",
+      left: { type: "number", value: "2" },
+      right: { type: "number", value: "3" },
+    },
   });
 });
