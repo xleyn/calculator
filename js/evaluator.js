@@ -21,15 +21,15 @@ export class Evaluator {
     const leftVal = Number(left.value);
     const rightVal = Number(right.value);
     if (op === "+") {
-      return Evaluator.createNode("number", leftVal + rightVal);
+      return Evaluator.createNode("number", String(leftVal + rightVal));
     } else if (op === "-") {
-      return Evaluator.createNode("number", leftVal - rightVal);
+      return Evaluator.createNode("number", String(leftVal - rightVal));
     } else if (op === "*") {
-      return Evaluator.createNode("number", leftVal * rightVal);
+      return Evaluator.createNode("number", String(leftVal * rightVal));
     } else if (op === "/") {
-      return Evaluator.createNode("number", leftVal / rightVal);
+      return Evaluator.createNode("number", String(leftVal / rightVal));
     } else if (op === "^") {
-      return Evaluator.createNode("number", leftVal ** rightVal);
+      return Evaluator.createNode("number", String(leftVal ** rightVal));
     }
   }
 

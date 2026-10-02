@@ -27,10 +27,7 @@ const KEY_TO_CODE = {
   c: "clear",
   Backspace: "backspace",
 };
-const DISPLAY_SYMBOLS = {
-  "*": "×",
-  "/": "÷",
-};
+const DISPLAY_SYMBOLS = { "*": "×", "/": "÷" };
 const ACTION_CODES = ["calculate", "clear", "backspace"];
 const isAction = (code) => ACTION_CODES.includes(code);
 const isInput = (code) => !isAction(code);
@@ -129,7 +126,7 @@ function handleAction(action) {
     clearExpression();
     addToExpression(result);
     console.log(ast);
-    console.log(tokens);
+    console.log(result);
   }
 }
 
