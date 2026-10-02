@@ -1,62 +1,72 @@
 :root {
-    --button-gap: 10px;
-    background-color: rgb(226, 206, 223);
+  --button-gap: 10px;
+  background-color: rgb(226, 206, 223);
 }
 
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
 }
 
 .btn {
-    font-size: 40px;
-    border-radius: 15px;
-    border: 2px solid black;
-    background-color: rgb(156, 232, 238);
-    min-width: calc((100% - 3*var(--button-gap))/ 4);
+  font-size: 40px;
+  border-radius: 15px;
+  border: 2px solid black;
+  background-color: rgb(156, 232, 238);
+  min-width: calc((100% - 3 * var(--button-gap)) / 4);
 }
 
 .btn:active {
-    background-color: rgb(117, 173, 177);
+  background-color: rgb(117, 173, 177);
+}
+
+#panel-main {
+  display: flex;
 }
 
 #panel-calculator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+#panel-ast {
+  flex: 1 1 auto;
+  border: 1px solid red;
 }
 
 #calculator {
-    flex: 0 1 450px;
-    padding: 20px;
-    background-color: #2aa27c;
-    display: flex;
-    flex-direction: column;
-    border-radius: 20px;
-    border: 5px solid black;
+  flex: 0 1 450px;
+  padding: 20px;
+  background-color: #2aa27c;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  border: 5px solid black;
 }
 
 #panel-display {
-    font-size: 40px;
-    text-align: center;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 20px;
-    margin-bottom: var(--button-gap)
+  font-size: 40px;
+  text-align: center;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 20px;
+  margin-bottom: var(--button-gap);
 }
 
 #panel-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--button-gap)
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--button-gap);
 }

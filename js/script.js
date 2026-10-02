@@ -1,6 +1,7 @@
 import { Parser } from "./parser.js";
 import { Tokeniser } from "./tokeniser.js";
 import { Evaluator } from "./evaluator.js";
+import { displayAST } from "./displayAST.js";
 
 const KEY_TO_CODE = {
   0: "0",
