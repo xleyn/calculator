@@ -145,5 +145,3 @@ window.addEventListener("keydown", (event) => {
     updateDisplay();
   }
 });
-
-// basic change to test that unit tests are running
