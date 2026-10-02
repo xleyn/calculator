@@ -57,7 +57,7 @@ export class Parser {
     if (!this.current() || this.current().value !== "^") return res;
 
     this.consume();
-    const right = this.parseUnary();
+    const right = this.parseExponents();
 
     return Parser.createASTNode("^", res, right);
   }
