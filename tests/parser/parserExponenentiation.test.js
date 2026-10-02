@@ -34,3 +34,47 @@ test("Parses chained exponentiation from right to left", () => {
     },
   });
 });
+
+test("Exponentiation has precedence over addition/subtraction and multiplication/division", () => {
+  const parser = new Parser([
+    [
+      { type: "number", value: "3" },
+      { type: "operator", value: "+" },
+      { type: "number", value: "4" },
+      { type: "operator", value: "-" },
+      { type: "number", value: "5" },
+      { type: "operator", value: "*" },
+      { type: "number", value: "6" },
+      { type: "operator", value: "/" },
+      { type: "number", value: "7" },
+      { type: "operator", value: "^" },
+      { type: "number", value: "8" },
+    ],
+  ]);
+  expect(parser.parse()).toEqual({
+    type: "operator",
+    operator: "-",
+    left: {
+      type: "operator",
+      operator: "+",
+      left: { type: "number", value: "3" },
+      right: { type: "number", value: "4" },
+    },
+    right: {
+      type: "operator",
+      operator: "/",
+      left: {
+        type: "operator",
+        operator: "*",
+        left: { type: "number", value: "5" },
+        right: { type: "number", value: "6" },
+      },
+      right: {
+        type: "operator",
+        operator: "^",
+        left: { type: "number", value: "7" },
+        right: { type: "number", value: "8" },
+      },
+    },
+  });
+});
