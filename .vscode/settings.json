@@ -3,6 +3,7 @@
         "BODMAS",
         "repr",
         "tokenise",
-        "Tokeniser"
+        "Tokeniser",
+        "Tokenises"
     ]
 }

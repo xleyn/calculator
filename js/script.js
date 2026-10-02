@@ -128,6 +128,8 @@ function handleAction(action) {
     const result = evaluator.evaluate();
     clearExpression();
     addToExpression(result);
+    console.log(ast);
+    console.log(tokens);
   }
 }
 
