@@ -1,39 +1,75 @@
 const panelAST = document.querySelector("#panel-ast");
 
-function drawNode(textContent, topPercent, leftPercent) {
-  const node = document.createElement("div");
-  node.textContent = textContent;
-  node.style.setProperty("--astDivTop", `${topPercent}%`);
-  node.style.setProperty("--astDivLeft", `${leftPercent}%`);
-  panelAST.appendChild(node);
-  return node;
+let maxDepth;
+let leafCount;
+let nodeX;
+const marginX = 10;
+const marginY = 10;
+
+function addLayoutInfo(ast) {
+  maxDepth = 0;
+  leafCount = 0;
+  nodeX = 0;
+  positionAST(ast);
+  convertLayoutCoords(ast);
 }
 
-const testAST = {
-  type: "operator",
-  value: "*",
-  left: {
-    type: "operator",
-    value: "+",
-    left: { type: "number", value: "10" },
-    right: { type: "number", value: "5" },
-  },
-  right: {
-    type: "operator",
-    value: "-",
-    left: { type: "number", value: "4" },
-    right: { type: "number", value: "20" },
-  },
-};
+function positionAST(node, depth = 1) {
+  node.y = depth;
+  maxDepth = Math.max(maxDepth, depth);
+
+  // if leaf
+  if (!node.left && !node.right) {
+    node.x = nodeX++;
+    leafCount++;
+    return;
+  }
+
+  positionAST(node.left, depth + 1);
+  positionAST(node.right, depth + 1);
+
+  node.x = (node.left.x + node.right.x) / 2;
+}
+
+function convertLayoutCoords(ast) {
+  const availableWidth = 100 - marginX * 2;
+  const xStep = availableWidth / (leafCount - 1);
+
+  ast.x = `${ast.x * xStep + marginX}%`;
+  ast.y = `${ast.y * 10}%`;
+
+  if (ast.left) {
+    convertLayoutCoords(ast.left);
+  }
+  if (ast.right) {
+    convertLayoutCoords(ast.right);
+  }
+}
+
+function drawAST(ast) {
+  drawNode(ast);
+
+  if (ast.left) {
+    drawAST(ast.left);
+  }
+  if (ast.right) {
+    drawAST(ast.right);
+  }
+}
+
+function drawNode(node) {
+  const div = document.createElement("div");
+  div.textContent = node.value;
+  div.style.setProperty("--astDivTop", node.y);
+  div.style.setProperty("--astDivLeft", node.x);
+  panelAST.appendChild(div);
+}
+
+export function clearAST() {
+  panelAST.replaceChildren();
+}
+
 export function displayAST(ast) {
-  drawNode(ast.operator, 10, 50);
-  drawNode(ast.left.operator, 20, 50 - 50 / 2);
-  drawNode(ast.right.operator, 20, 50 + 50 / 2);
-  drawNode(ast.left.left.value, 30, 25 - 25 / 2);
-  drawNode(ast.left.right.value, 30, 25 + 25 / 2);
-  drawNode(ast.right.left.value, 30, 75 - 25 / 2);
-  drawNode(ast.right.right.value, 30, 75 + 25 / 2);
+  addLayoutInfo(ast);
+  drawAST(ast);
 }
-
-// recursive positioning func for nodes in nodes?
-displayAST(testAST);

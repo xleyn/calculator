@@ -1,7 +1,7 @@
 import { Parser } from "./parser.js";
 import { Tokeniser } from "./tokeniser.js";
 import { Evaluator } from "./evaluator.js";
-import { displayAST } from "./displayAST.js";
+import { displayAST, clearAST } from "./displayAST.js";
 
 const KEY_TO_CODE = {
   0: "0",
@@ -122,12 +122,12 @@ function handleAction(action) {
     const tokens = tokeniser.tokenise();
     const parser = new Parser(tokens);
     const ast = parser.parse();
+    clearAST(ast);
+    displayAST(ast);
     const evaluator = new Evaluator(ast);
     const result = evaluator.evaluate();
     clearExpression();
     addToExpression(result);
-    console.log(ast);
-    console.log(result);
   }
 }
 
