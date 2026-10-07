@@ -117,6 +117,7 @@ function modifyExpressionPreInput(input) {
 function handleAction(action) {
   if (action === "clear") {
     clearExpression();
+    clearAST();
   } else if (action === "backspace") {
     backspaceExpression();
   } else if (action === "calculate") {
@@ -124,7 +125,7 @@ function handleAction(action) {
     const tokens = tokeniser.tokenise();
     const parser = new Parser(tokens);
     const ast = parser.parse();
-    clearAST(ast);
+    clearAST();
     displayAST(ast);
     const evaluator = new Evaluator(ast);
     const result = evaluator.evaluate();
