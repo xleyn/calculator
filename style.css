@@ -23,6 +23,11 @@ h1 {
   font-size: 1.5rem;
 }
 
+h2 {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
 svg {
   position: absolute;
   inset: 0;
@@ -57,11 +62,10 @@ svg {
 }
 
 #panel-ast {
-  flex: 1 1 auto;
+  flex: 1 1 500px;
   border: 1px solid red;
   position: relative;
   overflow: auto;
-  min-width: 400px;
 }
 
 #panel-ast div {
