@@ -10,7 +10,7 @@ test("Parses implicit bracket multiplication correctly", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "*",
+    value: "*",
     left: { type: "number", value: "6" },
     right: { type: "number", value: "7" },
   });
@@ -34,16 +34,16 @@ test("Brackets take precedence over other operators", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "-",
+    value: "-",
     left: {
       type: "operator",
-      operator: "/",
+      value: "/",
       left: {
         type: "operator",
-        operator: "*",
+        value: "*",
         left: {
           type: "operator",
-          operator: "+",
+          value: "+",
           left: { type: "number", value: "8" },
           right: { type: "number", value: "6" },
         },
@@ -53,7 +53,7 @@ test("Brackets take precedence over other operators", () => {
     },
     right: {
       type: "operator",
-      operator: "^",
+      value: "^",
       left: { type: "number", value: "4" },
       right: { type: "number", value: "7" },
     },

@@ -1,6 +1,7 @@
 import { Parser } from "./parser.js";
 import { Tokeniser } from "./tokeniser.js";
 import { Evaluator } from "./evaluator.js";
+import { displayAST, clearAST } from "./displayAST.js";
 
 const KEY_TO_CODE = {
   0: "0",
@@ -34,6 +35,8 @@ const isInput = (code) => !isAction(code);
 
 const panelButtons = document.querySelector("#panel-buttons");
 const panelDisplay = document.querySelector("#panel-display");
+const panelCalculator = document.querySelector("#panel-calculator");
+const panelAST = document.querySelector("#panel-ast");
 
 let expression = "";
 let lastInput = null;
@@ -114,6 +117,7 @@ function modifyExpressionPreInput(input) {
 function handleAction(action) {
   if (action === "clear") {
     clearExpression();
+    clearAST();
   } else if (action === "backspace") {
     backspaceExpression();
   } else if (action === "calculate") {
@@ -121,12 +125,12 @@ function handleAction(action) {
     const tokens = tokeniser.tokenise();
     const parser = new Parser(tokens);
     const ast = parser.parse();
+    clearAST();
+    displayAST(ast);
     const evaluator = new Evaluator(ast);
     const result = evaluator.evaluate();
     clearExpression();
     addToExpression(result);
-    console.log(ast);
-    console.log(result);
   }
 }
 
@@ -145,3 +149,8 @@ window.addEventListener("keydown", (event) => {
     updateDisplay();
   }
 });
+function syncASTHeight() {
+  panelAST.style.minHeight = `${panelCalculator.offsetHeight}px`;
+}
+window.addEventListener("resize", syncASTHeight);
+syncASTHeight();

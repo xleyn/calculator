@@ -1,62 +1,108 @@
 :root {
-    --button-gap: 10px;
-    background-color: rgb(226, 206, 223);
+  --button-gap: 10px;
+  --border-color: black;
+  --border-style: solid;
+  --color-detail: rgb(156, 232, 238);
+  --border-radius-strong: 20px;
+  --border-radius-medium: 15px;
+  --border-width-thick: 5px;
+  background-color: rgb(226, 206, 223);
 }
 
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+html {
+  font-size: 40px;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .btn {
-    font-size: 40px;
-    border-radius: 15px;
-    border: 2px solid black;
-    background-color: rgb(156, 232, 238);
-    min-width: calc((100% - 3*var(--button-gap))/ 4);
+  border-radius: var(--border-radius-medium);
+  border: 2px var(--border-style) var(--border-color);
+  background-color: var(--color-detail);
+  min-width: calc((100% - 3 * var(--button-gap)) / 4);
+  font-size: inherit;
 }
 
 .btn:active {
-    background-color: rgb(117, 173, 177);
+  background-color: rgb(117, 173, 177);
+}
+
+#panel-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 #panel-calculator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#calculator {
-    flex: 0 1 450px;
-    padding: 20px;
-    background-color: #2aa27c;
-    display: flex;
-    flex-direction: column;
-    border-radius: 20px;
-    border: 5px solid black;
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--border-radius-strong);
+  border: var(--border-width-thick) var(--border-style) var(--border-color);
+  background-color: #2aa27c;
+  padding: 20px;
+  flex: 0 1 500px;
 }
 
 #panel-display {
-    font-size: 40px;
-    text-align: center;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 20px;
-    margin-bottom: var(--button-gap)
+  text-align: center;
+  background-color: white;
+  border: 2px var(--border-style) var(--border-color);
+  border-radius: var(--border-radius-strong);
+  margin-bottom: var(--button-gap);
 }
 
 #panel-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--button-gap)
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--button-gap);
+}
+
+#panel-ast {
+  background-color: rgb(215, 184, 230);
+  border: var(--border-width-thick) var(--border-style) var(--border-color);
+  position: relative;
+  overflow: auto;
+  flex: 1 1 400px;
+  border-radius: var(--border-radius-strong);
+  z-index: 0;
+}
+
+#panel-ast div {
+  border: 1px solid var(--border-color);
+  display: inline-block;
+  padding: 10px;
+  position: absolute;
+  top: var(--astDivTop);
+  left: var(--astDivLeft);
+  transform: translate(-50%, -50%);
+  background-color: var(--color-detail);
+  padding: 0px 20px;
+  border-radius: var(--border-radius-medium);
 }

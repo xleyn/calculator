@@ -17,7 +17,7 @@ export class Evaluator {
     if (right.type !== "number") {
       right = this.evaluateNode(right);
     }
-    const op = node.operator;
+    const op = node.value;
     const leftVal = Number(left.value);
     const rightVal = Number(right.value);
     if (op === "+") {

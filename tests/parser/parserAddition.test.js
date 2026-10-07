@@ -8,7 +8,7 @@ test("Parses basic addition", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "+",
+    value: "+",
     left: { type: "number", value: "1" },
     right: { type: "number", value: "2" },
   });
@@ -26,13 +26,13 @@ test("Parses chained addition", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "+",
+    value: "+",
     left: {
       type: "operator",
-      operator: "+",
+      value: "+",
       left: {
         type: "operator",
-        operator: "+",
+        value: "+",
         left: { type: "number", value: "1" },
         right: { type: "number", value: "2" },
       },

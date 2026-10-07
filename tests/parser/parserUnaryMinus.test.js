@@ -7,7 +7,7 @@ test("Parses unary minus at start of expression", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "*",
+    value: "*",
     left: { type: "number", value: "-1" },
     right: { type: "number", value: "2" },
   });
@@ -22,11 +22,11 @@ test("Parses unary minus in the middle of an expression", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "*",
+    value: "*",
     left: { type: "number", value: "2" },
     right: {
       type: "operator",
-      operator: "*",
+      value: "*",
       left: { type: "number", value: "-1" },
       right: { type: "number", value: "6" },
     },
@@ -44,11 +44,11 @@ test("Parses unary minus in front of a bracketed expression", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "*",
+    value: "*",
     left: { type: "number", value: "-1" },
     right: {
       type: "operator",
-      operator: "*",
+      value: "*",
       left: { type: "number", value: "2" },
       right: { type: "number", value: "10" },
     },

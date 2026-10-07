@@ -8,7 +8,7 @@ test("Parses basic division", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "/",
+    value: "/",
     left: { type: "number", value: "10" },
     right: { type: "number", value: "5" },
   });
@@ -24,10 +24,10 @@ test("Parses chained division", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "/",
+    value: "/",
     left: {
       type: "operator",
-      operator: "/",
+      value: "/",
       left: { type: "number", value: "10" },
       right: { type: "number", value: "5" },
     },
@@ -48,13 +48,13 @@ test("Division has precedence over addition/subtraction", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "-",
+    value: "-",
     left: {
       type: "operator",
-      operator: "+",
+      value: "+",
       left: {
         type: "operator",
-        operator: "/",
+        value: "/",
         left: { type: "number", value: "2" },
         right: { type: "number", value: "3" },
       },

@@ -8,7 +8,7 @@ test("Parses basic multiplication", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "*",
+    value: "*",
     left: { type: "number", value: "2" },
     right: { type: "number", value: "3" },
   });
@@ -24,10 +24,10 @@ test("Parses chained multiplication", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "*",
+    value: "*",
     left: {
       type: "operator",
-      operator: "*",
+      value: "*",
       left: { type: "number", value: "2" },
       right: { type: "number", value: "3" },
     },
@@ -48,13 +48,13 @@ test("Multiplication has precedence over addition/subtraction", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "-",
+    value: "-",
     left: {
       type: "operator",
-      operator: "+",
+      value: "+",
       left: {
         type: "operator",
-        operator: "*",
+        value: "*",
         left: { type: "number", value: "2" },
         right: { type: "number", value: "3" },
       },
