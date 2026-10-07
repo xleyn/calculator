@@ -1,5 +1,11 @@
 :root {
   --button-gap: 10px;
+  --border-color: black;
+  --border-style: solid;
+  --color-detail: rgb(156, 232, 238);
+  --border-radius-strong: 20px;
+  --border-radius-medium: 15px;
+  --border-width-thick: 5px;
   background-color: rgb(226, 206, 223);
 }
 
@@ -33,13 +39,12 @@ svg {
   inset: 0;
   width: 100%;
   height: 100%;
-  border: 2px solid blue;
 }
 
 .btn {
-  border-radius: 15px;
-  border: 2px solid black;
-  background-color: rgb(156, 232, 238);
+  border-radius: var(--border-radius-medium);
+  border: 2px var(--border-style) var(--border-color);
+  background-color: var(--color-detail);
   min-width: calc((100% - 3 * var(--button-gap)) / 4);
   font-size: inherit;
 }
@@ -51,14 +56,15 @@ svg {
 #panel-main {
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 #panel-calculator {
   font-size: 1.3rem;
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
-  border: 5px solid black;
+  border-radius: var(--border-radius-strong);
+  border: var(--border-width-thick) var(--border-style) var(--border-color);
   background-color: #2aa27c;
   padding: 20px;
   flex: 0 1 500px;
@@ -67,8 +73,8 @@ svg {
 #panel-display {
   text-align: center;
   background-color: white;
-  border: 2px solid black;
-  border-radius: 20px;
+  border: 2px var(--border-style) var(--border-color);
+  border-radius: var(--border-radius-strong);
   margin-bottom: var(--button-gap);
 }
 
@@ -79,21 +85,24 @@ svg {
 }
 
 #panel-ast {
-  border: 1px solid red;
+  background-color: rgb(215, 184, 230);
+  border: var(--border-width-thick) var(--border-style) var(--border-color);
   position: relative;
   overflow: auto;
   flex: 1 1 400px;
+  border-radius: var(--border-radius-strong);
+  z-index: 0;
 }
 
 #panel-ast div {
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
   display: inline-block;
   padding: 10px;
   position: absolute;
   top: var(--astDivTop);
   left: var(--astDivLeft);
   transform: translate(-50%, -50%);
-  background-color: rgb(156, 232, 238);
+  background-color: var(--color-detail);
   padding: 0px 20px;
-  border-radius: 15px;
+  border-radius: var(--border-radius-medium);
 }
