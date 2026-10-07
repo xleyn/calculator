@@ -72,6 +72,9 @@ svg {
   top: var(--astDivTop);
   left: var(--astDivLeft);
   transform: translate(-50%, -50%);
+  background-color: rgb(156, 232, 238);
+  padding: 0px 20px;
+  border-radius: 15px;
 }
 
 #calculator {
