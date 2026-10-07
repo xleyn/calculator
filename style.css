@@ -23,6 +23,14 @@ h1 {
   font-size: 1.5rem;
 }
 
+svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid blue;
+}
+
 .btn {
   border-radius: 15px;
   border: 2px solid black;

@@ -66,6 +66,45 @@ function drawNode(node) {
   panelAST.appendChild(div);
 }
 
+function drawASTLines(ast) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  attachParentNode(ast, svg);
+  panelAST.appendChild(svg);
+}
+
+function attachParentNode(node, svg) {
+  if (node.left) {
+    const lineToLeft = createLineElement(
+      node.x,
+      node.left.x,
+      node.y,
+      node.left.y,
+    );
+    svg.appendChild(lineToLeft);
+    attachParentNode(node.left, svg);
+  }
+  if (node.right) {
+    const lineToRight = createLineElement(
+      node.x,
+      node.right.x,
+      node.y,
+      node.right.y,
+    );
+    svg.appendChild(lineToRight);
+    attachParentNode(node.right, svg);
+  }
+}
+
+function createLineElement(x1, x2, y1, y2) {
+  const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  line.setAttribute("x1", x1);
+  line.setAttribute("x2", x2);
+  line.setAttribute("y1", y1);
+  line.setAttribute("y2", y2);
+  line.setAttribute("stroke", "black");
+  return line;
+}
+
 export function clearAST() {
   panelAST.replaceChildren();
 }
@@ -73,4 +112,5 @@ export function clearAST() {
 export function displayAST(ast) {
   addLayoutInfo(ast);
   drawAST(ast);
+  drawASTLines(ast);
 }
