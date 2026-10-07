@@ -5,6 +5,7 @@ let leafCount;
 let nodeX;
 const marginX = 10;
 const marginY = 10;
+const spacePerRow = 20; //%
 
 function addLayoutInfo(ast) {
   maxDepth = 0;
@@ -14,7 +15,7 @@ function addLayoutInfo(ast) {
   convertLayoutCoords(ast);
 }
 
-function positionAST(node, depth = 1) {
+function positionAST(node, depth = 0) {
   node.y = depth;
   maxDepth = Math.max(maxDepth, depth);
 
@@ -36,7 +37,7 @@ function convertLayoutCoords(ast) {
   const xStep = availableWidth / (leafCount - 1);
 
   ast.x = `${ast.x * xStep + marginX}%`;
-  ast.y = `${ast.y * 10}%`;
+  ast.y = `${marginY + ast.y * spacePerRow}%`;
 
   if (ast.left) {
     convertLayoutCoords(ast.left);

@@ -35,6 +35,8 @@ const isInput = (code) => !isAction(code);
 
 const panelButtons = document.querySelector("#panel-buttons");
 const panelDisplay = document.querySelector("#panel-display");
+const panelCalculator = document.querySelector("#panel-calculator");
+const panelAST = document.querySelector("#panel-ast");
 
 let expression = "";
 let lastInput = null;
@@ -146,3 +148,8 @@ window.addEventListener("keydown", (event) => {
     updateDisplay();
   }
 });
+function syncASTHeight() {
+  panelAST.style.minHeight = `${panelCalculator.offsetHeight}px`;
+}
+window.addEventListener("resize", syncASTHeight);
+syncASTHeight();

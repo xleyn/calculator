@@ -37,6 +37,7 @@ h1 {
 
 #panel-main {
   display: flex;
+  flex-wrap: wrap;
 }
 
 #panel-calculator {
@@ -52,6 +53,7 @@ h1 {
   border: 1px solid red;
   position: relative;
   overflow: auto;
+  min-width: 400px;
 }
 
 #panel-ast div {
