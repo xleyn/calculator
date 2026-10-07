@@ -56,39 +56,12 @@ svg {
 #panel-calculator {
   font-size: 1.3rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 0 0 auto;
-}
-
-#panel-ast {
-  flex: 1 1 500px;
-  border: 1px solid red;
-  position: relative;
-  overflow: auto;
-}
-
-#panel-ast div {
-  border: 1px solid black;
-  display: inline-block;
-  padding: 10px;
-  position: absolute;
-  top: var(--astDivTop);
-  left: var(--astDivLeft);
-  transform: translate(-50%, -50%);
-  background-color: rgb(156, 232, 238);
-  padding: 0px 20px;
-  border-radius: 15px;
-}
-
-#calculator {
-  flex: 0 1 450px;
-  padding: 20px;
-  background-color: #2aa27c;
-  display: flex;
   flex-direction: column;
   border-radius: 20px;
   border: 5px solid black;
+  background-color: #2aa27c;
+  padding: 20px;
+  flex: 0 1 500px;
 }
 
 #panel-display {
@@ -103,4 +76,24 @@ svg {
   display: flex;
   flex-wrap: wrap;
   gap: var(--button-gap);
+}
+
+#panel-ast {
+  border: 1px solid red;
+  position: relative;
+  overflow: auto;
+  flex: 1 1 400px;
+}
+
+#panel-ast div {
+  border: 1px solid black;
+  display: inline-block;
+  padding: 10px;
+  position: absolute;
+  top: var(--astDivTop);
+  left: var(--astDivLeft);
+  transform: translate(-50%, -50%);
+  background-color: rgb(156, 232, 238);
+  padding: 0px 20px;
+  border-radius: 15px;
 }
