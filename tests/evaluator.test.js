@@ -3,7 +3,7 @@ import { Evaluator } from "../js/evaluator";
 test("Evaluates a 3-node addition AST", () => {
   const evaluator = new Evaluator({
     type: "operator",
-    operator: "+",
+    value: "+",
     left: { type: "number", value: "3" },
     right: { type: "number", value: "9" },
   });
@@ -13,7 +13,7 @@ test("Evaluates a 3-node addition AST", () => {
 test("Evaluates a 3-node subtraction AST", () => {
   const evaluator = new Evaluator({
     type: "operator",
-    operator: "-",
+    value: "-",
     left: { type: "number", value: "5" },
     right: { type: "number", value: "3" },
   });
@@ -23,7 +23,7 @@ test("Evaluates a 3-node subtraction AST", () => {
 test("Evaluates a 3-node multiplication AST", () => {
   const evaluator = new Evaluator({
     type: "operator",
-    operator: "*",
+    value: "*",
     left: { type: "number", value: "2" },
     right: { type: "number", value: "12" },
   });
@@ -33,7 +33,7 @@ test("Evaluates a 3-node multiplication AST", () => {
 test("Evaluates a 3-node division AST", () => {
   const evaluator = new Evaluator({
     type: "operator",
-    operator: "/",
+    value: "/",
     left: { type: "number", value: "21" },
     right: { type: "number", value: "3" },
   });
@@ -43,7 +43,7 @@ test("Evaluates a 3-node division AST", () => {
 test("Evaluates a 3-node exponentiation AST", () => {
   const evaluator = new Evaluator({
     type: "operator",
-    operator: "^",
+    value: "^",
     left: { type: "number", value: "15" },
     right: { type: "number", value: "2" },
   });
@@ -53,16 +53,16 @@ test("Evaluates a 3-node exponentiation AST", () => {
 test("Evaluates complex AST with operation nesting", () => {
   const evaluator = new Evaluator({
     type: "operator",
-    operator: "/",
+    value: "/",
     left: {
       type: "operator",
-      operator: "*",
+      value: "*",
       left: {
         type: "operator",
-        operator: "^",
+        value: "^",
         left: {
           type: "operator",
-          operator: "+",
+          value: "+",
           left: { type: "number", value: "3" },
           right: { type: "number", value: "6" },
         },
@@ -70,7 +70,7 @@ test("Evaluates complex AST with operation nesting", () => {
       },
       right: {
         type: "operator",
-        operator: "-",
+        value: "-",
         left: { type: "number", value: "10" },
         right: { type: "number", value: "9" },
       },

@@ -6,20 +6,21 @@ function drawNode(textContent, topPercent, leftPercent) {
   node.style.setProperty("--astDivTop", `${topPercent}%`);
   node.style.setProperty("--astDivLeft", `${leftPercent}%`);
   panelAST.appendChild(node);
+  return node;
 }
 
 const testAST = {
   type: "operator",
-  operator: "*",
+  value: "*",
   left: {
     type: "operator",
-    operator: "+",
+    value: "+",
     left: { type: "number", value: "10" },
     right: { type: "number", value: "5" },
   },
   right: {
     type: "operator",
-    operator: "-",
+    value: "-",
     left: { type: "number", value: "4" },
     right: { type: "number", value: "20" },
   },

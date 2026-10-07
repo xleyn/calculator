@@ -8,7 +8,7 @@ test("Parses basic exponentiation", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "^",
+    value: "^",
     left: { type: "number", value: "10" },
     right: { type: "number", value: "2" },
   });
@@ -24,11 +24,11 @@ test("Parses chained exponentiation from right to left", () => {
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "^",
+    value: "^",
     left: { type: "number", value: "10" },
     right: {
       type: "operator",
-      operator: "^",
+      value: "^",
       left: { type: "number", value: "2" },
       right: { type: "number", value: "3" },
     },
@@ -52,25 +52,25 @@ test("Exponentiation has precedence over addition/subtraction and multiplication
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
-    operator: "-",
+    value: "-",
     left: {
       type: "operator",
-      operator: "+",
+      value: "+",
       left: { type: "number", value: "3" },
       right: { type: "number", value: "4" },
     },
     right: {
       type: "operator",
-      operator: "/",
+      value: "/",
       left: {
         type: "operator",
-        operator: "*",
+        value: "*",
         left: { type: "number", value: "5" },
         right: { type: "number", value: "6" },
       },
       right: {
         type: "operator",
-        operator: "^",
+        value: "^",
         left: { type: "number", value: "7" },
         right: { type: "number", value: "8" },
       },

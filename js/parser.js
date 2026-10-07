@@ -89,6 +89,6 @@ export class Parser {
   }
 
   static createASTNode(operator, left, right) {
-    return { type: "operator", operator: operator, left, right };
+    return { type: "operator", value: operator, left, right };
   }
 }
