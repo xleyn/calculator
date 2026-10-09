@@ -68,7 +68,6 @@ function drawNode(node) {
 
 function drawASTLines(ast) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.style.setProperty("z-index", -1);
   attachParentNode(ast, svg);
   panelAST.appendChild(svg);
 }
