@@ -44,7 +44,6 @@ test("Multiplication has precedence over addition/subtraction", () => {
     { type: "number", value: "4" },
     { type: "operator", value: "-" },
     { type: "number", value: "5" },
-    ,
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",
