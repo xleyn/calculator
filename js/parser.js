@@ -15,6 +15,9 @@ export class Parser {
   }
 
   parse() {
+    if (this.tokens.at(-1).type !== "number") {
+      throw new Error("Syntax Error!");
+    }
     return this.parseAddSub();
   }
 
@@ -85,17 +88,23 @@ export class Parser {
   }
 
   parsePrimary() {
-    if (!this.current()) return;
+    if (!this.current()) {
+      return;
+    }
     const currentType = this.current().type;
     if (currentType === "number") {
       return this.consume();
     } else if (currentType === "lBracket") {
       this.consume();
       const res = this.parseAddSub();
-      if (this.current().type !== "rBracket")
+      if (this.current().type !== "rBracket") {
         throw Error("Right bracket is missing!");
+      }
       this.consume();
       return res;
+    }
+    if (currentType === "operator") {
+      throw new Error("Syntax Error!");
     }
   }
 

@@ -13,7 +13,7 @@ export class Tokeniser {
       const [char, type] = this.popQueue();
       if (
         this.memory.length === 0 ||
-        (type !== "operator" && type === this.memoryType)
+        (type === "number" && type === this.memoryType)
       ) {
         this.addToMemory(char, type);
       } else {

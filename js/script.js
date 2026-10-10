@@ -48,6 +48,9 @@ const panelAST = document.querySelector("#panel-ast");
 // internal storage of what user is typing
 let expression = "";
 
+// error on the display
+let displayError = null;
+
 // stores whatever user last clicked
 let lastCode = null;
 
@@ -56,8 +59,13 @@ updateDisplay();
 
 function updateDisplay() {
   if (expression === "") {
-    // if display is empty, need to set a default
-    panelDisplay.textContent = "0";
+    // if display is empty, need to set a default or display the error
+    if (displayError) {
+      panelDisplay.textContent = displayError;
+      displayError = null;
+    } else {
+      panelDisplay.textContent = "0";
+    }
   } else {
     // convert expression to visually improved string and add to DOM node
     panelDisplay.textContent = [...expression]
@@ -140,9 +148,17 @@ function handleAction(action) {
     const tokeniser = new Tokeniser(expression);
     const tokens = tokeniser.tokenise();
 
+    clearExpression();
+
     // parse the tokens into an AST
     const parser = new Parser(tokens);
-    const ast = parser.parse();
+    let ast;
+    try {
+      ast = parser.parse();
+    } catch (error) {
+      displayError = error.message;
+      return;
+    }
 
     // clear the old AST and display the new one
     clearAST();
@@ -153,7 +169,6 @@ function handleAction(action) {
     const result = evaluator.evaluate();
 
     // clear old expression and add result of calculation to end
-    clearExpression();
     addToExpression(result);
   }
 }
