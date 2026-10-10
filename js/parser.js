@@ -1,5 +1,5 @@
 export class Parser {
-  static NEGATIVE = { type: "number", value: "-1" };
+  static VALID_END_OPERATORS = ["!"];
 
   constructor(tokens) {
     this.tokens = tokens;
@@ -15,7 +15,11 @@ export class Parser {
   }
 
   parse() {
-    if (this.tokens.at(-1).type !== "number") {
+    const lastToken = this.tokens.at(-1);
+    if (
+      lastToken.type === "operator" &&
+      !Parser.VALID_END_OPERATORS.includes(lastToken.value)
+    ) {
       throw new Error("Syntax Error!");
     }
     return this.parseAddSub();
