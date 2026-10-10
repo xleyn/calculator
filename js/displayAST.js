@@ -27,9 +27,12 @@ function positionAST(node, depth = 0) {
   }
 
   positionAST(node.left, depth + 1);
-  positionAST(node.right, depth + 1);
-
-  node.x = (node.left.x + node.right.x) / 2;
+  if (node.right) {
+    positionAST(node.right, depth + 1);
+    node.x = (node.left.x + node.right.x) / 2;
+  } else {
+    node.x = node.left.x;
+  }
 }
 
 function convertLayoutCoords(ast) {

@@ -22,6 +22,7 @@ const KEY_TO_CODE = {
   "/": "/",
   "^": "^",
   ".": ".",
+  "!": "!",
   Enter: "calculate",
   "=": "calculate",
   Escape: "clear",
@@ -87,6 +88,7 @@ function inputAllowed(input) {
       expression.lastIndexOf("*"),
       expression.lastIndexOf("/"),
       expression.lastIndexOf("^"),
+      expression.lastIndexOf("!"),
       -1,
     );
     if (expression.slice(idxLastOp + 1).includes(".")) {
@@ -99,18 +101,6 @@ function inputAllowed(input) {
 function modifyExpressionPreInput(input) {
   if (lastInput === "calculate" && Tokeniser.isNumerical(input)) {
     clearExpression();
-  } else if (
-    Tokeniser.isOperator(input) &&
-    Tokeniser.isOperator(expression.at(-1))
-  ) {
-    if (
-      !(
-        (expression.at(-1) === "*" || expression.at(-1) === "^") &&
-        input === "-"
-      )
-    ) {
-      backspaceExpression();
-    }
   }
 }
 

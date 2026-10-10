@@ -10,26 +10,41 @@ export class Evaluator {
   evaluateNode(node) {
     let left = node.left;
     let right = node.right;
+    const op = node.value;
 
     if (left.type !== "number") {
       left = this.evaluateNode(left);
     }
-    if (right.type !== "number") {
+
+    // Right may be null because of unary operators
+    if (right && right.type !== "number") {
       right = this.evaluateNode(right);
     }
-    const op = node.value;
+
     const leftVal = Number(left.value);
-    const rightVal = Number(right.value);
+    const rightVal = right ? Number(right.value) : null;
+
     if (op === "+") {
       return Evaluator.createNode("number", String(leftVal + rightVal));
     } else if (op === "-") {
-      return Evaluator.createNode("number", String(leftVal - rightVal));
+      if (rightVal) {
+        return Evaluator.createNode("number", String(leftVal - rightVal));
+      } else {
+        // Unary minus
+        return Evaluator.createNode("number", String(-1 * leftVal));
+      }
     } else if (op === "*") {
       return Evaluator.createNode("number", String(leftVal * rightVal));
     } else if (op === "/") {
       return Evaluator.createNode("number", String(leftVal / rightVal));
     } else if (op === "^") {
       return Evaluator.createNode("number", String(leftVal ** rightVal));
+    } else if (op === "!") {
+      let total = 1;
+      for (let i = leftVal; i > 1; i--) {
+        total *= i;
+      }
+      return Evaluator.createNode("number", String(total));
     }
   }
 

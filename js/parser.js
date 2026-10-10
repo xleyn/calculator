@@ -52,7 +52,7 @@ export class Parser {
   }
 
   parseExponents() {
-    let res = this.parseUnary();
+    let res = this.parseFactorial();
 
     if (!this.current() || this.current().value !== "^") return res;
 
@@ -62,12 +62,23 @@ export class Parser {
     return Parser.createASTNode("^", res, right);
   }
 
+  parseFactorial() {
+    let res = this.parseUnary();
+
+    while (this.current() && this.current().value === "!") {
+      this.consume();
+      res = Parser.createASTNode("!", res, null);
+    }
+
+    return res;
+  }
+
   parseUnary() {
     if (this.current() && this.current().value === "-") {
       this.consume();
-      const right = this.parseExponents();
+      const left = this.parseExponents();
 
-      return Parser.createASTNode("*", Parser.NEGATIVE, right);
+      return Parser.createASTNode("-", left, null);
     }
 
     return this.parsePrimary();
