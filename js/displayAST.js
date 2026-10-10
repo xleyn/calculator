@@ -39,7 +39,7 @@ function convertLayoutCoords(ast) {
   const availableWidth = 100 - marginX * 2;
   const xStep = availableWidth / (leafCount - 1);
 
-  ast.x = `${ast.x * xStep + marginX}%`;
+  ast.x = leafCount > 1 ? `${ast.x * xStep + marginX}%` : "50%";
   ast.y = `${marginY + ast.y * spacePerRow}%`;
 
   if (ast.left) {
