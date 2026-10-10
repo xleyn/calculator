@@ -186,7 +186,8 @@ panelButtons.addEventListener("click", (event) => {
 
 window.addEventListener("keydown", (event) => {
   // listen for keyboard inputs and send corresponding codes (if they exist) to be processed
-  const code = KEY_TO_CODE[event.key];
+  const key = event.key;
+  const code = KEY_TO_CODE[key.length === 1 ? key.toLowerCase() : key];
   if (code !== undefined) {
     event.preventDefault();
     processCode(code);
