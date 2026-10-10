@@ -170,8 +170,6 @@ function handleAction(action) {
 
     // clear old expression and add result of calculation to end
     addToExpression(result);
-
-    console.log(ast, tokens);
   }
 }
 
