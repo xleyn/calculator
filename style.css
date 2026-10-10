@@ -6,6 +6,7 @@
   --border-radius-strong: 20px;
   --border-radius-medium: 15px;
   --border-width-thick: 5px;
+  --border-width-medium: 3px;
   background-color: rgb(226, 206, 223);
 }
 
@@ -43,9 +44,14 @@ svg {
   z-index: -1;
 }
 
+svg line {
+  stroke: black;
+  stroke-width: 3px;
+}
+
 .btn {
   border-radius: var(--border-radius-medium);
-  border: 2px var(--border-style) var(--border-color);
+  border: var(--border-width-medium) var(--border-style) var(--border-color);
   background-color: var(--color-detail);
   min-width: calc((100% - 3 * var(--button-gap)) / 4);
   font-size: inherit;
@@ -75,7 +81,7 @@ svg {
 #panel-display {
   text-align: center;
   background-color: white;
-  border: 2px var(--border-style) var(--border-color);
+  border: var(--border-width-medium) var(--border-style) var(--border-color);
   border-radius: var(--border-radius-strong);
   margin-bottom: var(--button-gap);
 }
@@ -96,7 +102,7 @@ svg {
 }
 
 #panel-ast div {
-  border: 1px solid var(--border-color);
+  border: var(--border-width-medium) var(--border-style) var(--border-color);
   display: inline-block;
   padding: 10px;
   position: absolute;

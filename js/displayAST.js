@@ -104,7 +104,6 @@ function createLineElement(x1, x2, y1, y2) {
   line.setAttribute("x2", x2);
   line.setAttribute("y1", y1);
   line.setAttribute("y2", y2);
-  line.setAttribute("stroke", "black");
   return line;
 }
 
