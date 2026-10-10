@@ -48,7 +48,6 @@ test("Exponentiation has precedence over addition/subtraction and multiplication
     { type: "number", value: "7" },
     { type: "operator", value: "^" },
     { type: "number", value: "8" },
-    ,
   ]);
   expect(parser.parse()).toEqual({
     type: "operator",

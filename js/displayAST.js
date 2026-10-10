@@ -27,16 +27,19 @@ function positionAST(node, depth = 0) {
   }
 
   positionAST(node.left, depth + 1);
-  positionAST(node.right, depth + 1);
-
-  node.x = (node.left.x + node.right.x) / 2;
+  if (node.right) {
+    positionAST(node.right, depth + 1);
+    node.x = (node.left.x + node.right.x) / 2;
+  } else {
+    node.x = node.left.x;
+  }
 }
 
 function convertLayoutCoords(ast) {
   const availableWidth = 100 - marginX * 2;
   const xStep = availableWidth / (leafCount - 1);
 
-  ast.x = `${ast.x * xStep + marginX}%`;
+  ast.x = leafCount > 1 ? `${ast.x * xStep + marginX}%` : "50%";
   ast.y = `${marginY + ast.y * spacePerRow}%`;
 
   if (ast.left) {

@@ -1,5 +1,5 @@
 export class Parser {
-  static NEGATIVE = { type: "number", value: "-1" };
+  static VALID_END_OPERATORS = ["!"];
 
   constructor(tokens) {
     this.tokens = tokens;
@@ -15,6 +15,13 @@ export class Parser {
   }
 
   parse() {
+    const lastToken = this.tokens.at(-1);
+    if (
+      lastToken.type === "operator" &&
+      !Parser.VALID_END_OPERATORS.includes(lastToken.value)
+    ) {
+      throw new Error("Syntax Error!");
+    }
     return this.parseAddSub();
   }
 
@@ -52,7 +59,7 @@ export class Parser {
   }
 
   parseExponents() {
-    let res = this.parseUnary();
+    let res = this.parseFactorial();
 
     if (!this.current() || this.current().value !== "^") return res;
 
@@ -62,29 +69,46 @@ export class Parser {
     return Parser.createASTNode("^", res, right);
   }
 
+  parseFactorial() {
+    let res = this.parseUnary();
+
+    while (this.current() && this.current().value === "!") {
+      this.consume();
+      res = Parser.createASTNode("!", res, null);
+    }
+
+    return res;
+  }
+
   parseUnary() {
     if (this.current() && this.current().value === "-") {
       this.consume();
-      const right = this.parseExponents();
+      const left = this.parseExponents();
 
-      return Parser.createASTNode("*", Parser.NEGATIVE, right);
+      return Parser.createASTNode("-", left, null);
     }
 
     return this.parsePrimary();
   }
 
   parsePrimary() {
-    if (!this.current()) return;
+    if (!this.current()) {
+      return;
+    }
     const currentType = this.current().type;
     if (currentType === "number") {
       return this.consume();
     } else if (currentType === "lBracket") {
       this.consume();
       const res = this.parseAddSub();
-      if (this.current().type !== "rBracket")
+      if (this.current().type !== "rBracket") {
         throw Error("Right bracket is missing!");
+      }
       this.consume();
       return res;
+    }
+    if (currentType === "operator") {
+      throw new Error("Syntax Error!");
     }
   }
 
