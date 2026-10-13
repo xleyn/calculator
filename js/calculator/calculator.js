@@ -1,7 +1,7 @@
 import { Parser } from "./parser.js";
 import { Tokeniser } from "./tokeniser.js";
 import { Evaluator } from "./evaluator.js";
-import { displayAST, clearAST } from "./displayAST.js";
+import { displayAST, clearAST } from "../shared/displayAST.js";
 
 // need to map keyboard inputs into relevant internal codes
 const KEY_TO_CODE = {
@@ -140,7 +140,7 @@ function handleAction(action) {
   // handle different action codes
   if (action === "clear") {
     clearExpression();
-    clearAST();
+    clearAST(panelAST);
   } else if (action === "backspace") {
     backspaceExpression();
   } else if (action === "calculate") {
@@ -161,8 +161,8 @@ function handleAction(action) {
     }
 
     // clear the old AST and display the new one
-    clearAST();
-    displayAST(ast);
+    clearAST(panelAST);
+    displayAST(ast, panelAST);
 
     // evaluate the result of the AST
     const evaluator = new Evaluator(ast);
