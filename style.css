@@ -28,11 +28,13 @@ html {
 h1 {
   text-align: center;
   font-size: 1.5rem;
+  margin: 20px;
 }
 
 h2 {
   text-align: center;
   font-size: 1.25rem;
+  margin: 10px;
 }
 
 svg {
@@ -67,6 +69,10 @@ svg line {
   gap: 20px;
 }
 
+#panel-calculator {
+  flex: 0 1 500px;
+}
+
 #calculator {
   font-size: 1.3rem;
   display: flex;
@@ -75,7 +81,6 @@ svg line {
   border: var(--border-width-thick) var(--border-style) var(--border-color);
   background-color: #2aa27c;
   padding: 20px;
-  flex: 0 1 500px;
 }
 
 #calculator-display {
@@ -91,12 +96,16 @@ svg line {
   flex-wrap: wrap;
   gap: var(--button-gap);
 }
+
+#panel-ast {
+  flex: 1 1 400px;
+}
+
 #ast-container {
   background-color: rgb(215, 184, 230);
   border: var(--border-width-thick) var(--border-style) var(--border-color);
   position: relative;
   overflow: auto;
-  flex: 1 1 400px;
   border-radius: var(--border-radius-strong);
   z-index: 0;
 }

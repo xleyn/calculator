@@ -16,41 +16,47 @@
     <div id="page-sections">
       <h1>Frontend Calculator Prototype</h1>
       <div id="panel-main">
-        <div id="calculator">
-          <div id="calculator-display"></div>
-          <div id="calculator-buttons">
-            <button class="btn" data-code="clear">AC</button>
-            <button class="btn" data-code="backspace">
-              <i
-                class="fa-solid fa-delete-left"
-                style="color: rgba(0, 0, 0, 0.7)"
-              ></i>
-            </button>
-            <button class="btn" data-code=""></button>
-            <button class="btn" data-code=""></button>
-            <button class="btn" data-code="(">(</button>
-            <button class="btn" data-code=")">)</button>
-            <button class="btn" data-code="!">x!</button>
-            <button class="btn" data-code="^">^</button>
-            <button class="btn" data-code="7">7</button>
-            <button class="btn" data-code="8">8</button>
-            <button class="btn" data-code="9">9</button>
-            <button class="btn" data-code="/">÷</button>
-            <button class="btn" data-code="4">4</button>
-            <button class="btn" data-code="5">5</button>
-            <button class="btn" data-code="6">6</button>
-            <button class="btn" data-code="*">x</button>
-            <button class="btn" data-code="1">1</button>
-            <button class="btn" data-code="2">2</button>
-            <button class="btn" data-code="3">3</button>
-            <button class="btn" data-code="-">-</button>
-            <button class="btn" data-code="0">0</button>
-            <button class="btn" data-code=".">.</button>
-            <button class="btn" data-code="calculate">=</button>
-            <button class="btn" data-code="+">+</button>
+        <div id="panel-calculator">
+          <h2>Calculator</h2>
+          <div id="calculator">
+            <div id="calculator-display"></div>
+            <div id="calculator-buttons">
+              <button class="btn" data-code="clear">AC</button>
+              <button class="btn" data-code="backspace">
+                <i
+                  class="fa-solid fa-delete-left"
+                  style="color: rgba(0, 0, 0, 0.7)"
+                ></i>
+              </button>
+              <button class="btn" data-code=""></button>
+              <button class="btn" data-code=""></button>
+              <button class="btn" data-code="(">(</button>
+              <button class="btn" data-code=")">)</button>
+              <button class="btn" data-code="!">x!</button>
+              <button class="btn" data-code="^">^</button>
+              <button class="btn" data-code="7">7</button>
+              <button class="btn" data-code="8">8</button>
+              <button class="btn" data-code="9">9</button>
+              <button class="btn" data-code="/">÷</button>
+              <button class="btn" data-code="4">4</button>
+              <button class="btn" data-code="5">5</button>
+              <button class="btn" data-code="6">6</button>
+              <button class="btn" data-code="*">x</button>
+              <button class="btn" data-code="1">1</button>
+              <button class="btn" data-code="2">2</button>
+              <button class="btn" data-code="3">3</button>
+              <button class="btn" data-code="-">-</button>
+              <button class="btn" data-code="0">0</button>
+              <button class="btn" data-code=".">.</button>
+              <button class="btn" data-code="calculate">=</button>
+              <button class="btn" data-code="+">+</button>
+            </div>
           </div>
         </div>
-        <div id="ast-container"></div>
+        <div id="panel-ast">
+          <h2>Parser Abstract Structure Tree</h2>
+          <div id="ast-container"></div>
+        </div>
       </div>
     </div>
   </body>
