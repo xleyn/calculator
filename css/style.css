@@ -33,6 +33,17 @@ h2 {
   margin: 10px;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 main {
   flex: 1;
   margin: 20px;
@@ -75,12 +86,6 @@ svg line {
   justify-content: space-between;
   padding: 10px 20px;
   background-color: #2aa27c;
-}
-
-#navbar-main ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
 }
 
 #navbar-right {
