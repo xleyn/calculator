@@ -96,6 +96,25 @@ footer {
 #hero {
   text-align: center;
   flex: 0 1 500px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#hero-left {
+  flex: 1 1 200px;
+}
+
+#hero-right {
+  flex: 0 1 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hero-right img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 #calculator-panels {
