@@ -1,3 +1,5 @@
+import { toDisplayChar } from "./util.js";
+
 let maxDepth;
 let leafCount;
 let nodeX;
@@ -61,7 +63,8 @@ function drawAST(ast, astContainer) {
 
 function drawNode(node, astContainer) {
   const div = document.createElement("div");
-  div.textContent = node.value;
+
+  div.textContent = toDisplayChar(node.value);
   div.style.setProperty("--astDivTop", node.y);
   div.style.setProperty("--astDivLeft", node.x);
   astContainer.appendChild(div);
