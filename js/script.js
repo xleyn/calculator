@@ -40,10 +40,10 @@ const isAction = (code) => ACTION_CODES.includes(code);
 const isInput = (code) => !isAction(code);
 
 // get relevant DOM nodes
-const panelButtons = document.querySelector("#panel-buttons");
-const panelDisplay = document.querySelector("#panel-display");
-const panelCalculator = document.querySelector("#panel-calculator");
-const panelAST = document.querySelector("#panel-ast");
+const panelButtons = document.querySelector("#calculator-buttons");
+const panelDisplay = document.querySelector("#calculator-display");
+const panelCalculator = document.querySelector("#calculator");
+const panelAST = document.querySelector("#ast-container");
 
 // internal storage of what user is typing
 let expression = "";

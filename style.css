@@ -67,7 +67,7 @@ svg line {
   gap: 20px;
 }
 
-#panel-calculator {
+#calculator {
   font-size: 1.3rem;
   display: flex;
   flex-direction: column;
@@ -78,7 +78,7 @@ svg line {
   flex: 0 1 500px;
 }
 
-#panel-display {
+#calculator-display {
   text-align: center;
   background-color: white;
   border: var(--border-width-medium) var(--border-style) var(--border-color);
@@ -86,12 +86,12 @@ svg line {
   margin-bottom: var(--button-gap);
 }
 
-#panel-buttons {
+#calculator-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: var(--button-gap);
 }
-#panel-ast {
+#ast-container {
   background-color: rgb(215, 184, 230);
   border: var(--border-width-thick) var(--border-style) var(--border-color);
   position: relative;
@@ -101,7 +101,7 @@ svg line {
   z-index: 0;
 }
 
-#panel-ast div {
+#ast-container div {
   border: var(--border-width-medium) var(--border-style) var(--border-color);
   display: inline-block;
   padding: 10px;

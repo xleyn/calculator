@@ -1,4 +1,4 @@
-const panelAST = document.querySelector("#panel-ast");
+const astContainer = document.querySelector("#ast-container");
 
 let maxDepth;
 let leafCount;
@@ -66,13 +66,13 @@ function drawNode(node) {
   div.textContent = node.value;
   div.style.setProperty("--astDivTop", node.y);
   div.style.setProperty("--astDivLeft", node.x);
-  panelAST.appendChild(div);
+  astContainer.appendChild(div);
 }
 
 function drawASTLines(ast) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   attachParentNode(ast, svg);
-  panelAST.appendChild(svg);
+  astContainer.appendChild(svg);
 }
 
 function attachParentNode(node, svg) {
@@ -108,7 +108,7 @@ function createLineElement(x1, x2, y1, y2) {
 }
 
 export function clearAST() {
-  panelAST.replaceChildren();
+  astContainer.replaceChildren();
 }
 
 export function displayAST(ast) {
