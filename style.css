@@ -24,30 +24,24 @@ body {
 }
 
 html {
-  font-size: 40px;
-}
-
-h1 {
-  text-align: center;
-  font-size: 1.5rem;
-  margin: 20px;
+  font-size: 24px;
 }
 
 h2 {
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   margin: 10px;
 }
 
 main {
   flex: 1;
-  margin: 0 20px;
+  margin: 20px;
 }
 
 footer {
   text-align: center;
-  font-size: 0.75rem;
   background-color: var(--color-surface);
+  padding: 20px;
 }
 
 svg {
@@ -105,7 +99,7 @@ svg line {
 }
 
 #calculator {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   display: flex;
   flex-direction: column;
   border-radius: var(--border-radius-strong);
@@ -139,6 +133,7 @@ svg line {
   overflow: auto;
   border-radius: var(--border-radius-strong);
   z-index: 0;
+  font-size: 1.5rem;
 }
 
 #ast-container div {
