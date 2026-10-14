@@ -45,7 +45,7 @@
         <div id="process-diagram">
           <svg
             id="process-arrow"
-            viewBox="0 0 100 100"
+            viewBox="-5 -5 110 110"
             height="400"
             width="400"
           >
@@ -63,12 +63,30 @@
               stroke-linecap="round"
               fill="none"
             ></path>
+            <circle style="--angle: 0deg"></circle>
+            <circle style="--angle: 68deg"></circle>
+            <circle style="--angle: 136deg"></circle>
+            <circle style="--angle: 204deg"></circle>
+            <circle style="--angle: 272deg"></circle>
+            <text style="--angle: 0deg">1</text>
+            <text style="--angle: 68deg">2</text>
+            <text style="--angle: 136deg">3</text>
+            <text style="--angle: 204deg">4</text>
+            <text style="--angle: 272deg">5</text>
           </svg>
-          <div class="stage-label stage-label-one">User input</div>
-          <div class="stage-label stage-label-two">Tokenisation</div>
-          <div class="stage-label stage-label-three">Parsing</div>
-          <div class="stage-label stage-label-four">Evaluation</div>
-          <div class="stage-label stage-label-five">Display</div>
+          <div class="stage-label align-mid-right" style="--angle: 0deg">
+            User input
+          </div>
+          <div class="stage-label align-top-mid" style="--angle: 68deg">
+            Tokenisation
+          </div>
+          <div class="stage-label" style="--angle: 136deg">Parsing</div>
+          <div class="stage-label align-bot-left" style="--angle: 204deg">
+            Evaluation
+          </div>
+          <div class="stage-label align-bot-mid" style="--angle: 272deg">
+            Display
+          </div>
         </div>
       </section>
     </main>

@@ -222,9 +222,27 @@ strong {
 .stage-label {
   position: absolute;
   font-size: 1.5rem;
+  left: calc(50% - 50% * cos(var(--angle)));
+  top: calc(50% + 50% * sin(var(--angle)));
 }
 
-.stage-label-one {
+.align-mid-right {
+  transform: translate(-100%, -50%);
+}
+
+.align-bot-left {
+  transform: translate(0%, -100%);
+}
+
+.align-bot-mid {
+  transform: translate(-50%, -100%);
+}
+
+.align-top-mid {
+  transform: translate(-50%, 0%);
+}
+
+/* .stage-label-one {
   left: calc(50% - 50% * cos(0deg));
   top: calc(50% + 50% * sin(0deg));
   transform: translate(-100%, -50%);
@@ -252,4 +270,24 @@ strong {
   left: calc(50% - 50% * cos(280deg));
   top: calc(50% + 50% * sin(280deg));
   transform: translate(-50%, -100%);
+} */
+
+#process-arrow circle {
+  fill: var(--color-detail);
+  stroke: black;
+  stroke-width: 2;
+  cx: calc(50 - 45 * cos(var(--angle)));
+  cy: calc(50 + 45 * sin(var(--angle)));
+  r: 7;
+}
+
+#process-arrow text {
+  text-anchor: middle;
+  alignment-baseline: central;
+  fill: black;
+  font-size: 10px;
+  transform: translate(
+    calc(50px - 45px * cos(var(--angle))),
+    calc(50px + 45px * sin(var(--angle)))
+  );
 }
