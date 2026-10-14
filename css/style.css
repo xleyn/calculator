@@ -213,6 +213,43 @@ strong {
   text-align: center;
 }
 
-#process-arrow {
+#process-diagram {
   margin: 100px 0;
+  position: relative;
+  display: inline-block;
+}
+
+.stage-label {
+  position: absolute;
+  font-size: 1.5rem;
+}
+
+.stage-label-one {
+  left: calc(50% - 50% * cos(0deg));
+  top: calc(50% + 50% * sin(0deg));
+  transform: translate(-100%, -50%);
+}
+
+.stage-label-two {
+  left: calc(50% - 50% * cos(70deg));
+  top: calc(50% + 50% * sin(70deg));
+  transform: translate(-100%, -50%);
+}
+
+.stage-label-three {
+  left: calc(50% - 50% * cos(140deg));
+  top: calc(50% + 50% * sin(140deg));
+  transform: translate(0%, -50%);
+}
+
+.stage-label-four {
+  left: calc(50% - 50% * cos(210deg));
+  top: calc(50% + 50% * sin(210deg));
+  transform: translate(0%, -50%);
+}
+
+.stage-label-five {
+  left: calc(50% - 50% * cos(280deg));
+  top: calc(50% + 50% * sin(280deg));
+  transform: translate(-50%, -100%);
 }
