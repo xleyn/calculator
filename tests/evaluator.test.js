@@ -1,4 +1,4 @@
-import { Evaluator } from "../js/evaluator";
+import { Evaluator } from "../js/calculator/evaluator";
 
 test("Evaluates a 3-node addition AST", () => {
   const evaluator = new Evaluator({

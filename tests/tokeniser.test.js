@@ -1,4 +1,4 @@
-import { Tokeniser } from "../js/tokeniser";
+import { Tokeniser } from "../js/calculator/tokeniser";
 
 test("Tokenises a number", () => {
   const tokeniser = new Tokeniser("123");

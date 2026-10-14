@@ -1,4 +1,4 @@
-import { Parser } from "../../js/parser";
+import { Parser } from "../../js/calculator/parser";
 
 test("Parses unary minus at start of expression", () => {
   const parser = new Parser([
