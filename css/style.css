@@ -101,6 +101,7 @@ strong {
   flex-wrap: wrap;
   padding: 20px;
   font-size: 1.5rem;
+  justify-content: center;
 }
 
 #hero-left {
@@ -131,6 +132,7 @@ strong {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
 }
 
 #panel-calculator {
@@ -205,4 +207,12 @@ strong {
 #ast-container line {
   stroke: black;
   stroke-width: 3px;
+}
+
+#process-overview {
+  text-align: center;
+}
+
+#process-arrow {
+  margin: 100px 0;
 }
