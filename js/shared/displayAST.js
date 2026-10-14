@@ -1,4 +1,4 @@
-const astContainer = document.querySelector("#ast-container");
+import { toDisplayChar } from "./util.js";
 
 let maxDepth;
 let leafCount;
@@ -50,26 +50,27 @@ function convertLayoutCoords(ast) {
   }
 }
 
-function drawAST(ast) {
-  drawNode(ast);
+function drawAST(ast, astContainer) {
+  drawNode(ast, astContainer);
 
   if (ast.left) {
-    drawAST(ast.left);
+    drawAST(ast.left, astContainer);
   }
   if (ast.right) {
-    drawAST(ast.right);
+    drawAST(ast.right, astContainer);
   }
 }
 
-function drawNode(node) {
+function drawNode(node, astContainer) {
   const div = document.createElement("div");
-  div.textContent = node.value;
+
+  div.textContent = toDisplayChar(node.value);
   div.style.setProperty("--astDivTop", node.y);
   div.style.setProperty("--astDivLeft", node.x);
   astContainer.appendChild(div);
 }
 
-function drawASTLines(ast) {
+function drawASTLines(ast, astContainer) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   attachParentNode(ast, svg);
   astContainer.appendChild(svg);
@@ -107,12 +108,12 @@ function createLineElement(x1, x2, y1, y2) {
   return line;
 }
 
-export function clearAST() {
+export function clearAST(astContainer) {
   astContainer.replaceChildren();
 }
 
-export function displayAST(ast) {
+export function displayAST(ast, astContainer) {
   addLayoutInfo(ast);
-  drawAST(ast);
-  drawASTLines(ast);
+  drawAST(ast, astContainer);
+  drawASTLines(ast, astContainer);
 }

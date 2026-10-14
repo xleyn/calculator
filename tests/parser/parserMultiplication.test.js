@@ -1,4 +1,4 @@
-import { Parser } from "../../js/parser";
+import { Parser } from "../../js/calculator/parser";
 
 test("Parses basic multiplication", () => {
   const parser = new Parser([

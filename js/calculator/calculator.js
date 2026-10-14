@@ -1,7 +1,8 @@
 import { Parser } from "./parser.js";
 import { Tokeniser } from "./tokeniser.js";
 import { Evaluator } from "./evaluator.js";
-import { displayAST, clearAST } from "./displayAST.js";
+import { displayAST, clearAST } from "../shared/displayAST.js";
+import { toDisplayChar } from "../shared/util.js";
 
 // need to map keyboard inputs into relevant internal codes
 const KEY_TO_CODE = {
@@ -30,9 +31,6 @@ const KEY_TO_CODE = {
   c: "clear",
   Backspace: "backspace",
 };
-
-// used to convert some symbols to better visual representations
-const DISPLAY_SYMBOLS = { "*": "×", "/": "÷" };
 
 // functions to determine whether an internal code is an action or an input
 const ACTION_CODES = ["calculate", "clear", "backspace"];
@@ -68,9 +66,7 @@ function updateDisplay() {
     }
   } else {
     // convert expression to visually improved string and add to DOM node
-    panelDisplay.textContent = [...expression]
-      .map((char) => DISPLAY_SYMBOLS[char] ?? char)
-      .join("");
+    panelDisplay.textContent = [...expression].map(toDisplayChar).join("");
   }
 }
 
@@ -140,7 +136,7 @@ function handleAction(action) {
   // handle different action codes
   if (action === "clear") {
     clearExpression();
-    clearAST();
+    clearAST(panelAST);
   } else if (action === "backspace") {
     backspaceExpression();
   } else if (action === "calculate") {
@@ -161,8 +157,8 @@ function handleAction(action) {
     }
 
     // clear the old AST and display the new one
-    clearAST();
-    displayAST(ast);
+    clearAST(panelAST);
+    displayAST(ast, panelAST);
 
     // evaluate the result of the AST
     const evaluator = new Evaluator(ast);

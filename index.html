@@ -3,71 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Calculator App</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="style.css" />
-    <script type="module" src="js/script.js" defer></script>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
-
   <body>
     <header>
       <nav id="navbar-main">
-        <a id="brand-logo">Logo</a>
+        <a id="brand-logo" href="index.html">Logo</a>
         <ul id="navbar-right">
-          <li><a>Home</a></li>
-          <li><a>Calculator</a></li>
-          <li><a>Functionality</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="pages/calculator.html">Calculator</a></li>
+          <li><a href="#">About</a></li>
         </ul>
       </nav>
     </header>
     <main>
-      <div id="calculator-panels">
-        <div id="panel-calculator">
-          <h2>Calculator</h2>
-          <div id="calculator">
-            <div id="calculator-display"></div>
-            <div id="calculator-buttons">
-              <button class="btn" data-code="clear">AC</button>
-              <button class="btn" data-code="backspace">
-                <i
-                  class="fa-solid fa-delete-left"
-                  style="color: rgba(0, 0, 0, 0.7)"
-                ></i>
-              </button>
-              <button class="btn" data-code=""></button>
-              <button class="btn" data-code=""></button>
-              <button class="btn" data-code="(">(</button>
-              <button class="btn" data-code=")">)</button>
-              <button class="btn" data-code="!">x!</button>
-              <button class="btn" data-code="^">^</button>
-              <button class="btn" data-code="7">7</button>
-              <button class="btn" data-code="8">8</button>
-              <button class="btn" data-code="9">9</button>
-              <button class="btn" data-code="/">÷</button>
-              <button class="btn" data-code="4">4</button>
-              <button class="btn" data-code="5">5</button>
-              <button class="btn" data-code="6">6</button>
-              <button class="btn" data-code="*">x</button>
-              <button class="btn" data-code="1">1</button>
-              <button class="btn" data-code="2">2</button>
-              <button class="btn" data-code="3">3</button>
-              <button class="btn" data-code="-">-</button>
-              <button class="btn" data-code="0">0</button>
-              <button class="btn" data-code=".">.</button>
-              <button class="btn" data-code="calculate">=</button>
-              <button class="btn" data-code="+">+</button>
-            </div>
+      <section id="hero" class="container">
+        <div id="hero-left">
+          <h1>Calculations that Inspire!</h1>
+          <p>
+            Implementing a workflow of <strong>tokenisation</strong>,
+            <strong>parsing</strong> and <strong>evaluation</strong>, this
+            pure-frontend <strong>calculator</strong> application demonstrates a
+            robust algorithm for calculations.
+          </p>
+          <div id="hero-buttons">
+            <a class="btn" href="pages/calculator.html">Try it out!</a>
+            <a class="btn" href="#">How does it work?</a>
           </div>
         </div>
-        <div id="panel-ast">
-          <h2>Parser Abstract Structure Tree</h2>
-          <div id="ast-container"></div>
+        <div id="hero-right">
+          <img src="img/ast_hero.png" />
         </div>
-      </div>
+      </section>
+      <section id="process-overview">
+        <h2>Our Process</h2>
+        <div id="process-diagram">
+          <svg
+            id="process-arrow"
+            viewBox="-5 -5 110 110"
+            height="600"
+            width="600"
+          >
+            <path
+              d="
+            M 5, 50 
+            A 45, 45, 0, 1, 0, 11.03, 27.5
+            M 11.03, 27.5
+            L 8.44, 17.84
+            M 11.03, 27.5
+            L 20.69, 24.9 
+            "
+              stroke="black"
+              stroke-width="3"
+              stroke-linecap="round"
+              fill="none"
+            ></path>
+            <circle style="--angle: 0deg"></circle>
+            <circle style="--angle: 68deg"></circle>
+            <circle style="--angle: 136deg"></circle>
+            <circle style="--angle: 204deg"></circle>
+            <circle style="--angle: 272deg"></circle>
+            <text style="--angle: 0deg">1</text>
+            <text style="--angle: 68deg">2</text>
+            <text style="--angle: 136deg">3</text>
+            <text style="--angle: 204deg">4</text>
+            <text style="--angle: 272deg">5</text>
+          </svg>
+          <div class="stage-label align-mid-right" style="--angle: 0deg">
+            User input
+          </div>
+          <div class="stage-label align-top-mid" style="--angle: 68deg">
+            Tokenisation
+          </div>
+          <div class="stage-label" style="--angle: 136deg">Parsing</div>
+          <div class="stage-label align-bot-left" style="--angle: 204deg">
+            Evaluation
+          </div>
+          <div class="stage-label align-bot-mid" style="--angle: 272deg">
+            Display
+          </div>
+        </div>
+      </section>
     </main>
-    <footer>@xleyn</footer>
+    <footer>
+      Developed by @xleyn.
+      <div>
+        Check out my other work at
+        <a href="https://github.com/xleyn">https://github.com/xleyn</a>
+      </div>
+    </footer>
   </body>
 </html>

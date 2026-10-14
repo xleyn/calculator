@@ -1,0 +1,263 @@
+:root {
+  --button-gap: 10px;
+  --border-color: black;
+  --border-style: solid;
+  --color-detail: rgb(156, 232, 238);
+  --color-container: rgb(215, 184, 230);
+  --border-radius-strong: 20px;
+  --border-radius-medium: 15px;
+  --border-width-thick: 5px;
+  --border-width-medium: 3px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(226, 206, 223);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+html {
+  font-size: 24px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 10px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.75rem;
+  margin: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+main {
+  flex: 1;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  text-align: center;
+  background-color: var(--color-container);
+  padding: 20px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.btn {
+  border-radius: var(--border-radius-medium);
+  border: var(--border-width-medium) var(--border-style) var(--border-color);
+  background-color: var(--color-detail);
+  font-size: inherit;
+  padding: 15px 45px;
+}
+
+.container {
+  background-color: var(--color-container);
+  border: var(--border-width-thick) var(--border-style) var(--border-color);
+  border-radius: var(--border-radius-strong);
+}
+
+#navbar-main {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #2aa27c;
+}
+
+#navbar-right {
+  display: flex;
+  gap: 20px;
+}
+
+#hero {
+  text-align: center;
+  flex: 0 1 500px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+  font-size: 1.5rem;
+  justify-content: center;
+}
+
+#hero-left {
+  flex: 1 1 200px;
+  text-align: center;
+}
+
+#hero-right {
+  flex: 0 1 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hero-right img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#hero-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+#calculator-panels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+#panel-calculator {
+  flex: 0 1 500px;
+}
+
+#calculator {
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #2aa27c;
+  padding: 20px;
+}
+
+#calculator-display {
+  text-align: center;
+  background-color: white;
+  border: var(--border-width-medium) var(--border-style) var(--border-color);
+  border-radius: var(--border-radius-strong);
+  margin-bottom: var(--button-gap);
+}
+
+#calculator-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--button-gap);
+}
+
+#calculator .btn {
+  min-width: calc((100% - 3 * var(--button-gap)) / 4);
+  padding: 0;
+}
+
+#calculator .btn:active {
+  background-color: rgb(117, 173, 177);
+}
+
+#panel-ast {
+  flex: 1 1 400px;
+}
+
+#ast-container {
+  position: relative;
+  overflow: auto;
+  z-index: 0;
+  font-size: 1.5rem;
+}
+
+#ast-container div {
+  border: var(--border-width-medium) var(--border-style) var(--border-color);
+  display: inline-block;
+  padding: 10px;
+  position: absolute;
+  top: var(--astDivTop);
+  left: var(--astDivLeft);
+  transform: translate(-50%, -50%);
+  background-color: var(--color-detail);
+  padding: 0px 20px;
+  border-radius: var(--border-radius-medium);
+  z-index: 0;
+}
+
+#ast-container svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: -1;
+}
+
+#ast-container line {
+  stroke: black;
+  stroke-width: 3px;
+}
+
+#process-overview {
+  text-align: center;
+}
+
+#process-diagram {
+  margin: 100px 0;
+  position: relative;
+  display: inline-block;
+}
+
+.stage-label {
+  position: absolute;
+  font-size: 1.5rem;
+  left: calc(50% - 50% * cos(var(--angle)));
+  top: calc(50% + 50% * sin(var(--angle)));
+}
+
+.align-mid-right {
+  transform: translate(-100%, -50%);
+}
+
+.align-bot-left {
+  transform: translate(0%, -100%);
+}
+
+.align-bot-mid {
+  transform: translate(-50%, -100%);
+}
+
+.align-top-mid {
+  transform: translate(-50%, 0%);
+}
+
+#process-arrow circle {
+  fill: var(--color-detail);
+  stroke: black;
+  stroke-width: 2;
+  cx: calc(50 - 45 * cos(var(--angle)));
+  cy: calc(50 + 45 * sin(var(--angle)));
+  r: 7;
+}
+
+#process-arrow text {
+  text-anchor: middle;
+  alignment-baseline: central;
+  fill: black;
+  font-size: 10px;
+  transform: translate(
+    calc(50px - 45px * cos(var(--angle))),
+    calc(50px + 45px * sin(var(--angle)))
+  );
+}
