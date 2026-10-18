@@ -219,10 +219,6 @@ strong {
   margin: 0 auto;
 }
 
-#process-arrow {
-  background-color: #2aa27c87;
-}
-
 #process-arrow circle {
   fill: var(--color-detail);
   stroke: black;
