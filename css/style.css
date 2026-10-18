@@ -214,9 +214,7 @@ strong {
 }
 
 #process-diagram {
-  margin: 100px 0;
   position: relative;
-  display: inline-block;
 }
 
 #process-arrow {
@@ -227,8 +225,8 @@ strong {
   fill: var(--color-detail);
   stroke: black;
   stroke-width: 1;
-  cx: calc(75 - 25 * cos(var(--angle)));
-  cy: calc(50 + 25 * sin(var(--angle)));
+  cx: calc(60 - 25 * cos(var(--angle)));
+  cy: calc(40 + 25 * sin(var(--angle)));
   r: 5;
 }
 
@@ -242,18 +240,8 @@ strong {
   dominant-baseline: hanging;
 }
 
-.align-TR {
-  text-anchor: end;
-  dominant-baseline: hanging;
-}
-
 .align-ML {
   text-anchor: start;
-  dominant-baseline: central;
-}
-
-.align-MM {
-  text-anchor: middle;
   dominant-baseline: central;
 }
 
@@ -262,18 +250,8 @@ strong {
   dominant-baseline: central;
 }
 
-.align-BL {
-  text-anchor: start;
-  dominant-baseline: auto;
-}
-
 .align-BM {
   text-anchor: middle;
-  dominant-baseline: auto;
-}
-
-.align-BR {
-  text-anchor: end;
   dominant-baseline: auto;
 }
 
@@ -283,8 +261,8 @@ strong {
   fill: black;
   font-size: 5px;
   transform: translate(
-    calc(75px - 25px * cos(var(--angle))),
-    calc(50px + 25px * sin(var(--angle)))
+    calc(60px - 25px * cos(var(--angle))),
+    calc(40px + 25px * sin(var(--angle)))
   );
 }
 
@@ -292,7 +270,7 @@ strong {
   fill: black;
   font-size: 5px;
   transform: translate(
-    calc(75px - 32px * cos(var(--angle))),
-    calc(50px + 32px * sin(var(--angle)))
+    calc(60px - 32px * cos(var(--angle))),
+    calc(40px + 32px * sin(var(--angle)))
   );
 }
