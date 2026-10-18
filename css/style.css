@@ -88,6 +88,14 @@ strong {
   background-color: #2aa27c;
 }
 
+#navbar-right li {
+  transition: transform 0.5s;
+}
+
+#navbar-right li:hover {
+  transform: scale(1.1);
+}
+
 #navbar-right {
   display: flex;
   gap: 20px;
