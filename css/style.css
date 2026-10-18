@@ -219,45 +219,80 @@ strong {
   display: inline-block;
 }
 
-.stage-label {
-  position: absolute;
-  font-size: 1.5rem;
-  left: calc(50% - 50% * cos(var(--angle)));
-  top: calc(50% + 50% * sin(var(--angle)));
-}
-
-.align-mid-right {
-  transform: translate(-100%, -50%);
-}
-
-.align-bot-left {
-  transform: translate(0%, -100%);
-}
-
-.align-bot-mid {
-  transform: translate(-50%, -100%);
-}
-
-.align-top-mid {
-  transform: translate(-50%, 0%);
+#process-arrow {
+  background-color: #2aa27c87;
 }
 
 #process-arrow circle {
   fill: var(--color-detail);
   stroke: black;
-  stroke-width: 2;
-  cx: calc(50 - 45 * cos(var(--angle)));
-  cy: calc(50 + 45 * sin(var(--angle)));
-  r: 7;
+  stroke-width: 1;
+  cx: calc(75 - 25 * cos(var(--angle)));
+  cy: calc(50 + 25 * sin(var(--angle)));
+  r: 5;
 }
 
-#process-arrow text {
+.align-TL {
+  text-anchor: start;
+  dominant-baseline: hanging;
+}
+
+.align-TM {
+  text-anchor: middle;
+  dominant-baseline: hanging;
+}
+
+.align-TR {
+  text-anchor: end;
+  dominant-baseline: hanging;
+}
+
+.align-ML {
+  text-anchor: start;
+  dominant-baseline: central;
+}
+
+.align-MM {
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.align-MR {
+  text-anchor: end;
+  dominant-baseline: central;
+}
+
+.align-BL {
+  text-anchor: start;
+  dominant-baseline: auto;
+}
+
+.align-BM {
+  text-anchor: middle;
+  dominant-baseline: auto;
+}
+
+.align-BR {
+  text-anchor: end;
+  dominant-baseline: auto;
+}
+
+#process-arrow .node-label {
   text-anchor: middle;
   alignment-baseline: central;
   fill: black;
-  font-size: 10px;
+  font-size: 5px;
   transform: translate(
-    calc(50px - 45px * cos(var(--angle))),
-    calc(50px + 45px * sin(var(--angle)))
+    calc(75px - 25px * cos(var(--angle))),
+    calc(50px + 25px * sin(var(--angle)))
+  );
+}
+
+#process-arrow .stage-label {
+  fill: black;
+  font-size: 5px;
+  transform: translate(
+    calc(75px - 32px * cos(var(--angle))),
+    calc(50px + 32px * sin(var(--angle)))
   );
 }
