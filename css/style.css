@@ -9,6 +9,7 @@
   --border-medium: 3px solid black;
   --border-thick: 5px solid black;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  interpolate-size: allow-keywords;
 }
 
 * {
@@ -73,12 +74,36 @@ strong {
   background-color: var(--color-detail);
   font-size: inherit;
   padding: 15px 45px;
+  cursor: pointer;
+}
+
+.about-btn {
+  display: block;
+  width: 100%;
+  display: flex;
+  padding-inline: 30px;
+  margin-top: 10px;
+}
+
+.about-content {
+  height: 0;
+  overflow: hidden;
+  transition: height var(--transition-time-short);
+}
+
+.about-header {
+  flex: 1 1 auto;
+}
+
+.expanded {
+  height: auto;
 }
 
 .container {
   background-color: var(--color-container);
   border: var(--border-thick);
   border-radius: var(--border-radius-strong);
+  padding: 20px;
 }
 
 .hover-scale {
@@ -107,7 +132,6 @@ strong {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 20px;
   font-size: 1.5rem;
   justify-content: center;
 }
@@ -301,5 +325,5 @@ svg .align-BM {
 }
 
 #process-diagram .stage-group:hover .stage-desc {
-  --stage-label-radius: 33px;
+  --stage-label-radius: 34px;
 }
