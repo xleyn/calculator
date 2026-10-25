@@ -37,5 +37,4 @@ btnsCollapse.forEach((btn) => {
   console.log(btn);
   btn.addEventListener("click", () => focusSection(btn));
 });
-
-openSectionFromHash();
+window.addEventListener("load", openSectionFromHash);
