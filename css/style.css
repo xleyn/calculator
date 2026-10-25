@@ -9,6 +9,7 @@
   --border-medium: 3px solid black;
   --border-thick: 5px solid black;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  interpolate-size: allow-keywords;
 }
 
 * {
@@ -73,6 +74,21 @@ strong {
   background-color: var(--color-detail);
   font-size: inherit;
   padding: 15px 45px;
+}
+
+.btn-collapse {
+  display: block;
+  width: 100%;
+}
+
+.content-collapse {
+  height: 0;
+  overflow: hidden;
+  transition: height var(--transition-time-short);
+}
+
+.expanded {
+  height: auto;
 }
 
 .container {
