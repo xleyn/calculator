@@ -1,7 +1,8 @@
 const btnsCollapse = [...document.querySelectorAll(".btn-collapse")];
 
 btnsCollapse.forEach((btn) => {
-  btn.addEventListener("click", () => expandSection(btn));
+  console.log(btn);
+  btn.addEventListener("click", () => focusSection(btn));
 });
 
 function focusSection(btn) {
