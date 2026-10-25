@@ -1,13 +1,13 @@
 :root {
   --button-gap: 10px;
-  --border-color: black;
-  --border-style: solid;
   --color-detail: rgb(156, 232, 238);
+  --color-detail-two: #2aa27c;
   --color-container: rgb(215, 184, 230);
   --border-radius-strong: 20px;
   --border-radius-medium: 15px;
-  --border-width-thick: 5px;
-  --border-width-medium: 3px;
+  --transition-time-short: 0.5s;
+  --border-medium: 3px solid black;
+  --border-thick: 5px solid black;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -69,7 +69,7 @@ strong {
 
 .btn {
   border-radius: var(--border-radius-medium);
-  border: var(--border-width-medium) var(--border-style) var(--border-color);
+  border: var(--border-medium);
   background-color: var(--color-detail);
   font-size: inherit;
   padding: 15px 45px;
@@ -77,15 +77,23 @@ strong {
 
 .container {
   background-color: var(--color-container);
-  border: var(--border-width-thick) var(--border-style) var(--border-color);
+  border: var(--border-thick);
   border-radius: var(--border-radius-strong);
+}
+
+.hover-scale {
+  transition: transform var(--transition-time-short);
+}
+
+.hover-scale:hover {
+  transform: scale(1.1);
 }
 
 #navbar-main {
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: #2aa27c;
+  background-color: var(--color-detail-two);
 }
 
 #navbar-right {
@@ -143,14 +151,14 @@ strong {
   font-size: 1.5rem;
   display: flex;
   flex-direction: column;
-  background-color: #2aa27c;
+  background-color: var(--color-detail-two);
   padding: 20px;
 }
 
 #calculator-display {
   text-align: center;
   background-color: white;
-  border: var(--border-width-medium) var(--border-style) var(--border-color);
+  border: var(--border-medium);
   border-radius: var(--border-radius-strong);
   margin-bottom: var(--button-gap);
 }
@@ -182,15 +190,14 @@ strong {
 }
 
 #ast-container div {
-  border: var(--border-width-medium) var(--border-style) var(--border-color);
   display: inline-block;
+  border: var(--border-medium);
   padding: 10px;
   position: absolute;
   top: var(--astDivTop);
   left: var(--astDivLeft);
   transform: translate(-50%, -50%);
   background-color: var(--color-detail);
-  padding: 0px 20px;
   border-radius: var(--border-radius-medium);
   z-index: 0;
 }
@@ -213,62 +220,86 @@ strong {
   text-align: center;
 }
 
-#process-diagram {
+svg .align-TL {
+  text-anchor: start;
+  dominant-baseline: hanging;
+}
+
+svg .align-TM {
+  text-anchor: middle;
+  dominant-baseline: hanging;
+}
+
+svg .align-ML {
+  text-anchor: start;
+  dominant-baseline: central;
+}
+
+svg .align-MR {
+  text-anchor: end;
+  dominant-baseline: central;
+}
+
+svg .align-BM {
+  text-anchor: middle;
+  dominant-baseline: auto;
+}
+
+#process-diagram-container {
   position: relative;
   max-width: 1000px;
   margin: 0 auto;
 }
 
-#process-arrow circle {
+#process-diagram {
+  --main-radius: 25px;
+  --main-cx: 60px;
+  --main-cy: 40px;
+  --transition-time: var(--transition-time-short);
+  --stage-label-radius: 32px;
+  --font-size: 5px;
+}
+
+#process-diagram circle {
   fill: var(--color-detail);
   stroke: black;
   stroke-width: 1;
-  cx: calc(60 - 25 * cos(var(--angle)));
-  cy: calc(40 + 25 * sin(var(--angle)));
+  cx: calc(var(--main-cx) - var(--main-radius) * cos(var(--angle)));
+  cy: calc(var(--main-cy) + var(--main-radius) * sin(var(--angle)));
   r: 5;
+  transition: r var(--transition-time);
 }
 
-.align-TL {
-  text-anchor: start;
-  dominant-baseline: hanging;
-}
-
-.align-TM {
-  text-anchor: middle;
-  dominant-baseline: hanging;
-}
-
-.align-ML {
-  text-anchor: start;
-  dominant-baseline: central;
-}
-
-.align-MR {
-  text-anchor: end;
-  dominant-baseline: central;
-}
-
-.align-BM {
-  text-anchor: middle;
-  dominant-baseline: auto;
-}
-
-#process-arrow .node-label {
+#process-diagram .stage-number {
   text-anchor: middle;
   alignment-baseline: central;
   fill: black;
   font-size: 5px;
   transform: translate(
-    calc(60px - 25px * cos(var(--angle))),
-    calc(40px + 25px * sin(var(--angle)))
+    calc(var(--main-cx) - var(--main-radius) * cos(var(--angle))),
+    calc(var(--main-cy) + var(--main-radius) * sin(var(--angle)))
   );
+  transition: font-size var(--transition-time);
 }
 
-#process-arrow .stage-label {
+#process-diagram .stage-desc {
   fill: black;
-  font-size: 5px;
+  font-size: var(--font-size);
   transform: translate(
-    calc(60px - 32px * cos(var(--angle))),
-    calc(40px + 32px * sin(var(--angle)))
+    calc(var(--main-cx) - var(--stage-label-radius) * cos(var(--angle))),
+    calc(var(--main-cy) + var(--stage-label-radius) * sin(var(--angle)))
   );
+  transition: transform var(--transition-time);
+}
+
+#process-diagram .stage-group:hover circle {
+  r: 5.5;
+}
+
+#process-diagram .stage-group:hover .stage-number {
+  font-size: calc(var(--font-size) + 0.5px);
+}
+
+#process-diagram .stage-group:hover .stage-desc {
+  --stage-label-radius: 33px;
 }
