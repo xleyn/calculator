@@ -1,9 +1,11 @@
-const btnsCollapse = [...document.querySelectorAll(".btn-collapse")];
+const btnsCollapse = [...document.querySelectorAll(".about-btn")];
 
-btnsCollapse.forEach((btn) => {
-  console.log(btn);
-  btn.addEventListener("click", () => focusSection(btn));
-});
+function openSectionFromHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (!id) return;
+  const btn = document.querySelector(`#about-btn-${id}`);
+  focusSection(btn);
+}
 
 function focusSection(btn) {
   const content = btn.nextElementSibling;
@@ -30,3 +32,10 @@ function collapse(content, icon) {
     toggleState(content, icon);
   }
 }
+
+btnsCollapse.forEach((btn) => {
+  console.log(btn);
+  btn.addEventListener("click", () => focusSection(btn));
+});
+
+openSectionFromHash();

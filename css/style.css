@@ -77,7 +77,7 @@ strong {
   cursor: pointer;
 }
 
-.btn-collapse {
+.about-btn {
   display: block;
   width: 100%;
   display: flex;
@@ -85,13 +85,13 @@ strong {
   margin-top: 10px;
 }
 
-.content-collapse {
+.about-content {
   height: 0;
   overflow: hidden;
   transition: height var(--transition-time-short);
 }
 
-.collapse-header {
+.about-header {
   flex: 1 1 auto;
 }
 
@@ -103,6 +103,7 @@ strong {
   background-color: var(--color-container);
   border: var(--border-thick);
   border-radius: var(--border-radius-strong);
+  padding: 20px;
 }
 
 .hover-scale {
@@ -131,7 +132,6 @@ strong {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 20px;
   font-size: 1.5rem;
   justify-content: center;
 }
