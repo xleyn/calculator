@@ -1,5 +1,5 @@
 # Frontend Arithmetic Calculator
 
-This repository contains code for a simple arithmetic calculator that utilises frontend technologies only. 
+This repository contains code for a frontend arithmetic calculator that properly tokenises, parses and evaluates expressions.
 
-Completed as part of the Odin Project Foundations course, this experience allowed me to further develop my HTML, CSS and JS skills.
+Check out the current live build at: <a>https://xleyn.github.io/calculator/</a>
