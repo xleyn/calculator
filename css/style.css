@@ -74,17 +74,24 @@ strong {
   background-color: var(--color-detail);
   font-size: inherit;
   padding: 15px 45px;
+  cursor: pointer;
 }
 
 .btn-collapse {
   display: block;
   width: 100%;
+  display: flex;
+  padding-inline: 30px;
 }
 
 .content-collapse {
   height: 0;
   overflow: hidden;
   transition: height var(--transition-time-short);
+}
+
+.collapse-header {
+  flex: 1 1 auto;
 }
 
 .expanded {
