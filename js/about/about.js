@@ -1,14 +1,29 @@
-const btnCollapse = document.querySelectorAll(".btn-collapse");
-const contentCollapse = document.querySelectorAll(
-  ".btn-collapse + .content-collapse",
-);
+const btnsCollapse = [...document.querySelectorAll(".btn-collapse")];
 
-btnCollapse.forEach((btn, idx) => {
-  const content = contentCollapse[idx];
+btnsCollapse.forEach((btn) => {
+  const content = btn.nextElementSibling;
+  const icon = btn.querySelector("i");
   btn.addEventListener("click", () => {
-    content.classList.toggle("expanded");
-    const collapseIcon = btn.querySelector("i");
-    collapseIcon.classList.toggle("fa-plus");
-    collapseIcon.classList.toggle("fa-minus");
+    const isExpanded = toggleState(content, icon);
+    if (isExpanded) {
+      btnsCollapse.forEach((otherBtn) => {
+        if (otherBtn === btn) {
+          return;
+        }
+        collapse(otherBtn.nextElementSibling, otherBtn.querySelector("i"));
+      });
+    }
   });
 });
+
+function toggleState(content, icon) {
+  icon.classList.toggle("fa-plus");
+  icon.classList.toggle("fa-minus");
+  return content.classList.toggle("expanded");
+}
+
+function collapse(content, icon) {
+  if (content.classList.contains("expanded")) {
+    toggleState(content, icon);
+  }
+}

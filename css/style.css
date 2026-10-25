@@ -82,6 +82,7 @@ strong {
   width: 100%;
   display: flex;
   padding-inline: 30px;
+  margin-top: 10px;
 }
 
 .content-collapse {
