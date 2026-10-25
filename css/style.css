@@ -1,15 +1,13 @@
 :root {
   --button-gap: 10px;
-  --border-color: black;
-  --border-style: solid;
   --color-detail: rgb(156, 232, 238);
   --color-detail-two: #2aa27c;
   --color-container: rgb(215, 184, 230);
   --border-radius-strong: 20px;
   --border-radius-medium: 15px;
-  --border-width-thick: 5px;
-  --border-width-medium: 3px;
   --transition-time-short: 0.5s;
+  --border-medium: 3px solid black;
+  --border-thick: 5px solid black;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -71,7 +69,7 @@ strong {
 
 .btn {
   border-radius: var(--border-radius-medium);
-  border: var(--border-width-medium) var(--border-style) var(--border-color);
+  border: var(--border-medium);
   background-color: var(--color-detail);
   font-size: inherit;
   padding: 15px 45px;
@@ -79,8 +77,16 @@ strong {
 
 .container {
   background-color: var(--color-container);
-  border: var(--border-width-thick) var(--border-style) var(--border-color);
+  border: var(--border-thick);
   border-radius: var(--border-radius-strong);
+}
+
+.hover-scale {
+  transition: transform var(--transition-time-short);
+}
+
+.hover-scale:hover {
+  transform: scale(1.1);
 }
 
 #navbar-main {
@@ -88,14 +94,6 @@ strong {
   justify-content: space-between;
   padding: 10px 20px;
   background-color: var(--color-detail-two);
-}
-
-#navbar-right li {
-  transition: transform 0.5s;
-}
-
-#navbar-right li:hover {
-  transform: scale(1.1);
 }
 
 #navbar-right {
@@ -138,10 +136,6 @@ strong {
   justify-content: center;
 }
 
-#hero-buttons a:hover {
-  animation: wobble 0.5s ease-in-out;
-}
-
 #calculator-panels {
   display: flex;
   flex-wrap: wrap;
@@ -164,7 +158,7 @@ strong {
 #calculator-display {
   text-align: center;
   background-color: white;
-  border: var(--border-width-medium) var(--border-style) var(--border-color);
+  border: var(--border-medium);
   border-radius: var(--border-radius-strong);
   margin-bottom: var(--button-gap);
 }
@@ -196,15 +190,14 @@ strong {
 }
 
 #ast-container div {
-  border: var(--border-width-medium) var(--border-style) var(--border-color);
   display: inline-block;
+  border: var(--border-medium);
   padding: 10px;
   position: absolute;
   top: var(--astDivTop);
   left: var(--astDivLeft);
   transform: translate(-50%, -50%);
   background-color: var(--color-detail);
-  padding: 0px 20px;
   border-radius: var(--border-radius-medium);
   z-index: 0;
 }
@@ -309,22 +302,4 @@ svg .align-BM {
 
 #process-diagram .stage-group:hover .stage-desc {
   --stage-label-radius: 33px;
-}
-
-@keyframes wobble {
-  0% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(0.5deg);
-  }
-  50% {
-    transform: rotate(0deg);
-  }
-  75% {
-    transform: rotate(-0.5deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
 }
