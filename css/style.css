@@ -82,13 +82,23 @@ strong {
   width: 100%;
   display: flex;
   padding-inline: 30px;
-  margin-top: 10px;
+  border: none;
+  border-radius: 0;
+}
+
+.about-stage-section {
+  border: var(--border-medium);
+  border-radius: var(--border-radius-medium);
+  margin-block: 20px;
+  overflow: hidden;
 }
 
 .about-content {
   height: 0;
   overflow: hidden;
   transition: height var(--transition-time-short);
+  background-color: var(--color-container);
+  box-shadow: inset 0 3px 0 black;
 }
 
 .about-header {
